@@ -18,13 +18,14 @@ class Park(models.Model):
     location = models.CharField(max_length=150, help_text='Insert where is the park located.')
     animals = models.ManyToManyField(Animal, help_text='Select animals for this park.')
 
-    MONTH_CHOICES = [("0", "Month doesn't matter.")] + [(str(i), calendar.month_name[i]) for i in range(1, 13)]
-    ideal_months = models.CharField(
-        max_length=20,
-        choices=MONTH_CHOICES,
-        default='0',
-        help_text='Ideal months for visit.'
-    )
+    # TODO toto mozno doplnit, ale nejak rozumnejsie
+    # MONTH_CHOICES = [("0", "Month doesn't matter.")] + [(str(i), calendar.month_name[i]) for i in range(1, 13)]
+    # ideal_months = models.CharField(
+    #     max_length=20,
+    #     choices=MONTH_CHOICES,
+    #     default='0',
+    #     help_text='Ideal months for visit.'
+    # )
 
     description = models.TextField(max_length=2000, help_text='Enter a description of the park.')
 

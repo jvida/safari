@@ -1,0 +1,40 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>All parks we offer</h1>
+  {% if park_list %}
+  <ul>
+    {% for park in park_list %}
+      <li>
+        <b>{{ park.name }}</b> {{park.location}} {{ park.description }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no park currently.</p>
+  {% endif %}
+
+  <h1>All accommodation options we offer</h1>
+  {% if accommodations %}
+  <ul>
+    {% for acc in accommodations %}
+      <li>
+        <b>{{ acc.type }}</b> {{ acc.description }} {{ acc.price_from }} - {{ acc.price_to }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no accommodation options currently.</p>
+  {% endif %}
+{% endblock %}
