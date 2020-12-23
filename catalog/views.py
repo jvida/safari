@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from catalog.models import Park, Accommodation
+from catalog.models import Park, Accommodation, Expedition, Trip
 from django.views import generic
 
 # Create your views here.
@@ -24,3 +24,12 @@ class ParkListView(generic.ListView):
 class AccommodationListView(generic.ListView):
     model = Accommodation
 
+
+class ExpeditionListView(generic.ListView):
+    model = Expedition
+    queryset = Expedition.objects.filter(recommended=True)
+
+    def get_context_data(self, **kwargs):
+        context = super(ExpeditionListView, self).get_context_data(**kwargs)
+        context['trips'] = Trip.objects.all()
+        return context

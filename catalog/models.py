@@ -69,7 +69,7 @@ class Expedition(models.Model):
         """Create a string for the Trip. This is required to display trips in Admin."""
         return ', '.join(trip.park.name for trip in self.trips.all())
 
-    display_trips.short_description = 'Trip'
+    display_trips.short_description = 'Trips'
 
     def __str__(self):
         """String for representing the Model object."""

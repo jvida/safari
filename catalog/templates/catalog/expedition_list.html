@@ -1,0 +1,30 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Our recommended expeditions</h1>
+  {% if expedition_list %}
+  <ul>
+    {% for expedition in expedition_list %}
+        <h2>{{ expedition }}</h2>
+        {% for trip in expedition.trips.all %}
+            <li>
+                <b>Park: </b>{{ trip.park }}, <b>Accommodation: </b>{{ trip.accommodation }}, <b>Days: </b>{{ trip.days }}
+            </li>
+        {% endfor %}
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no recommended expeditions currently.</p>
+  {% endif %}
+{% endblock %}
