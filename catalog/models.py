@@ -1,6 +1,7 @@
 from django.db import models
 import calendar
 import uuid
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -10,6 +11,15 @@ class Animal(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return self.name
+
+
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=16, blank=True)
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return f'{self.user.last_name}, {self.user.first_name}'
 
 
 class Park(models.Model):
@@ -60,6 +70,10 @@ class Trip(models.Model):
 
 
 class Expedition(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True, help_text='Dont select a '
+                                                                                                       'customer for '
+                                                                                                       'recommended '
+                                                                                                       'trips.')
     trips = models.ManyToManyField(Trip, help_text='Select trips you wish to visit.')
     CHOICES = [(i, i) for i in range(1, 10)]
     number_of_people = models.IntegerField(choices=CHOICES, blank=True, help_text='Select how many people.')
@@ -74,3 +88,5 @@ class Expedition(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return self.display_trips() + '| ' + str(self.number_of_people) + ', ' + str(self.recommended)
+
+
