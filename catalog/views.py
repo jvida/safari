@@ -1,14 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from catalog.models import Park, Accommodation, Expedition, Trip, Customer
 from django.views import generic
 
 # for user creation form
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from catalog.forms import CreateNewUserForm
+from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile
 from catalog.models import User
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
+
 
 # Create your views here.
 
@@ -48,7 +49,6 @@ def create_new_user(request):
     if request.method == 'POST':
 
         # Create a form instance and populate it with data from the request (binding):
-        # form = CreateNewUserForm(request.POST)
         form = CreateNewUserForm(request.POST)
 
         # Check if the form is valid:
@@ -73,7 +73,6 @@ def create_new_user(request):
             return HttpResponseRedirect(reverse('login'))
         # # If this is a GET (or any other method) create the default form.
     else:
-        # form = CreateNewUserForm()
         form = CreateNewUserForm()
 
     context = {
@@ -81,3 +80,42 @@ def create_new_user(request):
     }
 
     return render(request, 'catalog/sign_up.html', context)
+
+
+def edit_user_profile(request):
+    # If this is a POST request then process the Form data
+    if request.method == 'POST':
+        user_form = EditUserProfile(request.POST, instance=request.user)
+        customer_form = EditCustomerProfile(request.POST, instance=request.user)
+        # Check if forms are valid:
+        if user_form.is_valid() and customer_form.is_valid():
+            # process the data in forms
+            phone_number = customer_form.cleaned_data['phone_number']
+            customer = Customer.objects.get(user=request.user)
+            customer.phone_number = phone_number
+            user_form.save()
+            customer.save()
+            return HttpResponseRedirect(reverse('profile'))
+    # else it's a GET request so show data
+    else:
+        customer = Customer.objects.get(user=request.user)
+        user_form = EditUserProfile(instance=request.user)
+        customer_form = EditCustomerProfile(instance=customer)
+
+    context = {
+        'user_form': user_form,
+        'customer_form': customer_form,
+    }
+
+    return render(request, 'catalog/profile_edit.html', context)
+
+
+def customer_profile_view(request):
+    customer = Customer.objects.get(user=request.user)
+    context = {
+        'customer': customer,
+    }
+
+    return render(request, 'catalog/profile.html', context)
+
+

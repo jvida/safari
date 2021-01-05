@@ -1,0 +1,22 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Profile</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+      {{ customer_form.as_p }}
+    <button type="submit">Submit changes</button>
+  </form>
+{% endblock %}
