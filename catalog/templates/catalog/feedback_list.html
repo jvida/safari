@@ -1,0 +1,33 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Feedbacks</h1>
+  {% if feedback_list %}
+  <ul>
+    {% for feedback in feedback_list %}
+        <h2>{{ feedback.customer }}{{ feedback.customer.user.id }}</h2>
+            <li>
+                {{ feedback.content }}
+            </li>
+        {% if feedback.customer.user == request.user %}
+            <a href="">Edit</a>
+            <a href="{% url 'feedback-delete' feedback.id %}">Delete</a>
+        {% endif %}
+        <hr>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no feedbacks currently.</p>
+  {% endif %}
+{% endblock %}

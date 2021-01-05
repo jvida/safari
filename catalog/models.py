@@ -22,6 +22,12 @@ class Customer(models.Model):
         return f'{self.user.last_name}, {self.user.first_name}'
 
 
+class Feedback(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular feedback.')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    content = models.TextField(max_length=2000, help_text='Enter your feedback.')
+
+
 class Park(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular park.')
     name = models.CharField(max_length=150)

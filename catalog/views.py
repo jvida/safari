@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from catalog.models import Park, Accommodation, Expedition, Trip, Customer
+from catalog.models import Park, Accommodation, Expedition, Trip, Customer, Feedback
 from django.views import generic
 
 # for user creation form
@@ -9,6 +9,7 @@ from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfil
 from catalog.models import User
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -119,3 +120,10 @@ def customer_profile_view(request):
     return render(request, 'catalog/profile.html', context)
 
 
+class FeedbackListView(generic.ListView):
+    model = Feedback
+
+
+class FeedbackDelete(generic.DeleteView):
+    model = Feedback
+    success_url = reverse_lazy('feedbacks')

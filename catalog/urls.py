@@ -9,4 +9,6 @@ urlpatterns = [
     path('signup/', views.create_new_user, name='signup'),
     path('profile/', views.customer_profile_view, name='profile'),
     path('profile/edit/', views.edit_user_profile, name='profile-edit'),
+    path('feedbacks/', views.FeedbackListView.as_view(), name='feedbacks'),
+    path('feedback/<uuid:pk>/delete/', views.FeedbackDelete.as_view(), name='feedback-delete'),
 ]

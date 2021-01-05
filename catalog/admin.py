@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Park, Accommodation, Animal, Trip, Expedition, Customer
+from .models import Park, Accommodation, Animal, Trip, Expedition, Customer, Feedback
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
@@ -26,4 +26,5 @@ admin.site.register(Accommodation)
 admin.site.register(Animal)
 admin.site.register(Trip)
 admin.site.register(Expedition)
+admin.site.register(Feedback)
 

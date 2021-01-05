@@ -31,7 +31,7 @@
           <li><a href="{% url 'accommodations' %}">Accommodation options</a></li>
           <li><a href="{% url 'expeditions' %}">Recommended expeditions</a></li>
             <li><a href="">Contacts</a></li>
-            <li><a href="">Feedbacks</a></li>
+            <li><a href="{% url 'feedbacks' %}">Feedbacks</a></li>
         <hr>
         {% if user.is_authenticated %}
             <li>User: {{ user.get_username }}</li>

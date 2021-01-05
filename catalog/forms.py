@@ -11,7 +11,7 @@ class CreateNewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
-    phone_number = forms.RegexField(regex=r'^\+\d{8,15}', max_length=16)
+    phone_number = forms.RegexField(regex=r'^\+\d{8,15}', max_length=16, required=False)
 
     class Meta:
         model = User
