@@ -124,6 +124,22 @@ class FeedbackListView(generic.ListView):
     model = Feedback
 
 
+class FeedbackCreate(generic.CreateView):
+    model = Feedback
+    fields = ['content']
+    success_url = reverse_lazy('feedbacks')
+
+    def form_valid(self, form):
+        form.instance.customer = Customer.objects.get(user=self.request.user)
+        return super().form_valid(form)
+
+
+class FeedbackUpdate(generic.UpdateView):
+    model = Feedback
+    fields = ['content']
+    success_url = reverse_lazy('feedbacks')
+
+
 class FeedbackDelete(generic.DeleteView):
     model = Feedback
     success_url = reverse_lazy('feedbacks')

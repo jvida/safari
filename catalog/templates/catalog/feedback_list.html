@@ -21,7 +21,7 @@
                 {{ feedback.content }}
             </li>
         {% if feedback.customer.user == request.user %}
-            <a href="">Edit</a>
+            <a href="{% url 'feedback-update' feedback.id %}">Edit</a>
             <a href="{% url 'feedback-delete' feedback.id %}">Delete</a>
         {% endif %}
         <hr>
@@ -30,4 +30,5 @@
   {% else %}
     <p>There are no feedbacks currently.</p>
   {% endif %}
+    <a href="{% url 'feedback-create' %}">Create feedback</a>
 {% endblock %}
