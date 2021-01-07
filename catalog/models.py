@@ -27,6 +27,8 @@ class Feedback(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular feedback.')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     content = models.TextField(max_length=2000, help_text='Enter your feedback.')
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_last_edit = models.DateTimeField(auto_now=True)
 
 
 class Park(models.Model):

@@ -10,7 +10,7 @@ urlpatterns = [
     path('profile/', views.customer_profile_view, name='profile'),
     path('profile/edit/', views.edit_user_profile, name='profile-edit'),
     path('feedbacks/', views.FeedbackListView.as_view(), name='feedbacks'),
-    path('feedback/<uuid:pk>/delete/', views.FeedbackDelete.as_view(), name='feedback-delete'),
     path('feedback/create/', views.FeedbackCreate.as_view(), name='feedback-create'),
     path('feedback/<uuid:pk>/update/', views.FeedbackUpdate.as_view(), name='feedback-update'),
+    path('feedback/<uuid:pk>/delete/', views.FeedbackDelete.as_view(), name='feedback-delete'),
 ]
