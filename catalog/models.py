@@ -70,12 +70,12 @@ class Trip(models.Model):
     park = models.ForeignKey('Park', on_delete=models.CASCADE, help_text='Select a park for this trip.')
     accommodation = models.ForeignKey('Accommodation', on_delete=models.CASCADE)
     CHOICES = [(i, i) for i in range(1, 5)]
-    days = models.IntegerField(choices=CHOICES, blank=True, help_text='Select how many days you wish to stay in '
-                                                                      'this park.')
+    days = models.IntegerField(choices=CHOICES, help_text='Select how many days you wish to stay in '
+                                                          'this park.')
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.park.name + ', ' + self.accommodation.type + ', ' + str(self.days)
+        return str(self.id) + ', ' + self.park.name + ', ' + self.accommodation.type + ', ' + str(self.days)
 
 
 class Expedition(models.Model):
@@ -85,17 +85,27 @@ class Expedition(models.Model):
                                                                                                        'trips.')
     trips = models.ManyToManyField(Trip, help_text='Select trips you wish to visit.')
     CHOICES = [(i, i) for i in range(1, 10)]
-    number_of_people = models.IntegerField(choices=CHOICES, blank=True, help_text='Select how many people.')
+    number_of_people = models.IntegerField(choices=CHOICES, blank=True, null=True, help_text='Select how many people.'
+                                                                                             ' (Can be changed later)')
+    message_for_us = models.TextField(max_length=2000, blank=True, help_text='Enter a message of us, if u want.')
     recommended = models.BooleanField(default=False, help_text='Is this a recommended trip by agency?')
 
-    def display_trips(self):
-        """Create a string for the Trip. This is required to display trips in Admin."""
-        return ', '.join(trip.park.name for trip in self.trips.all())
+    # def display_trips(self):
+    #     """Create a string for the Trip. This is required to display trips in Admin."""
+    #     return ', '.join(trip.park.name for trip in self.trips.all())
 
-    display_trips.short_description = 'Trips'
+    # display_trips.short_description = 'Trips'
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.display_trips() + '| ' + str(self.number_of_people) + ', ' + str(self.recommended)
+        return f'{self.id}, {self.customer}, {self.number_of_people}'
 
+    # used when adding and modifying one of recommended expeditions
+    def get_absolute_url_rec(self):
+        """Returns the url to access a detail record for editing of this expedition."""
+        return reverse('add-recommended-expedition', args=[str(self.id)])
 
+    # used for editing one of customer's expeditions
+    def get_absolute_url_my(self):
+        """Returns the url to access a detail record for editing of this expedition."""
+        return reverse('edit-my-expedition', args=[str(self.id)])

@@ -5,11 +5,12 @@ from django.views import generic
 # for user creation form
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile
+from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet, TripForm
 from catalog.models import User
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from django.urls import reverse_lazy
+from django.forms import modelformset_factory
 
 
 # Create your views here.
@@ -37,11 +38,19 @@ class AccommodationListView(generic.ListView):
 
 class ExpeditionListView(generic.ListView):
     model = Expedition
-    queryset = Expedition.objects.filter(recommended=True)
+    template_name = 'catalog/expedition_list.html'
+
+    def get_queryset(self):
+        if self.kwargs['query'] == "recommended":
+            return Expedition.objects.filter(recommended=True)
+        elif self.kwargs['query'] == "my_expeditions":
+            customer = Customer.objects.get(user=self.request.user)
+            return Expedition.objects.filter(customer=customer)
 
     def get_context_data(self, **kwargs):
         context = super(ExpeditionListView, self).get_context_data(**kwargs)
         context['trips'] = Trip.objects.all()
+        context['query'] = self.kwargs['query']
         return context
 
 
@@ -129,6 +138,7 @@ class FeedbackCreate(generic.CreateView):
     fields = ['content']
     success_url = reverse_lazy('feedbacks')
 
+    # this is to set the customer field to currently logged in user automatically
     def form_valid(self, form):
         form.instance.customer = Customer.objects.get(user=self.request.user)
         return super().form_valid(form)
@@ -143,3 +153,143 @@ class FeedbackUpdate(generic.UpdateView):
 class FeedbackDelete(generic.DeleteView):
     model = Feedback
     success_url = reverse_lazy('feedbacks')
+
+
+def create_new_expedition(request):
+    num_parks = Park.objects.all().count()
+    TripFormSet = modelformset_factory(Trip, form=TripForm, formset=BaseTripFormSet,
+                                       max_num=num_parks, min_num=1, extra=0, validate_min=True)
+    # If this is a POST request then process the Form data
+    if request.method == 'POST':
+
+        # Create a form instance and populate it with data from the request (binding):
+        trip_formset = TripFormSet(request.POST)
+        expedition_form = ExpeditionForm(request.POST)
+
+        # Check if the form is valid:
+        if expedition_form.is_valid() and trip_formset.is_valid():
+            # process the data in form.cleaned_data as required
+            expedition = expedition_form.save()
+            trips = trip_formset.save(
+                commit=False)  # i dont want to save all trips, because i dont want duplicates in DB
+            # for trip in trips:
+            for trip in trips:
+                """Check if this trip already exists in DB"""
+                trip, created = Trip.objects.get_or_create(park=trip.park,
+                                                           accommodation=trip.accommodation,
+                                                           days=trip.days)
+                expedition.trips.add(trip)
+
+            expedition.customer = Customer.objects.get(user=request.user)
+            expedition.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
+        # # If this is a GET (or any other method) create the default form.
+    else:
+        expedition_form = ExpeditionForm()
+        # By default, when you create a formset from a model, the formset will use a queryset
+        # that includes all objects in the model (e.g., Author.objects.all()).
+        # You can override this behavior by using the queryset argument:
+        trip_formset = TripFormSet(queryset=Trip.objects.none())
+
+    context = {
+        'trip_formset': trip_formset,
+        'expedition_form': expedition_form,
+    }
+    return render(request, 'catalog/create_expedition.html', context)
+
+
+def add_recommended_expedition(request, pk):
+    print("add_recommended_expedition")
+    num_parks = Park.objects.all().count()
+    TripFormSet = modelformset_factory(Trip, form=TripForm, formset=BaseTripFormSet,
+                                       max_num=num_parks, min_num=1, extra=0, validate_min=True)
+    # If this is a POST request then process the Form data
+    if request.method == 'POST':
+
+        # Create a form instance and populate it with data from the request (binding):
+        trip_formset = TripFormSet(request.POST)
+        expedition_form = ExpeditionForm(request.POST)
+
+        # Check if the form is valid:
+        if expedition_form.is_valid() and trip_formset.is_valid():
+            # process the data in form.cleaned_data as required
+            expedition = expedition_form.save()
+            trips = trip_formset.save(
+                commit=False)  # i dont want to save all trips, because i dont want duplicates in DB
+            # for trip in trips:
+            print(trips)
+            for trip in trips:
+                """Check if this trip already exists in DB"""
+                trip, created = Trip.objects.get_or_create(park=trip.park,
+                                                           accommodation=trip.accommodation,
+                                                           days=trip.days)
+                print(trip)
+                expedition.trips.add(trip)
+
+            expedition.customer = Customer.objects.get(user=request.user)
+            expedition.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
+        # # If this is a GET (or any other method) create the default form.
+    else:
+        expedition_form = ExpeditionForm(instance=Expedition.objects.get(id=pk))
+        trip_formset = TripFormSet(queryset=Expedition.objects.get(id=pk).trips.all())
+
+    context = {
+        'trip_formset': trip_formset,
+        'expedition_form': expedition_form,
+    }
+    return render(request, 'catalog/create_expedition.html', context)
+
+
+def edit_my_expedition(request, pk):
+    print("edit_my_expedition")
+    num_parks = Park.objects.all().count()
+    TripFormSet = modelformset_factory(Trip, form=TripForm, formset=BaseTripFormSet,
+                                       max_num=num_parks, min_num=1, extra=0, validate_min=True)
+
+    expedition_instance = get_object_or_404(Expedition, pk=pk)
+
+    # If this is a POST request then process the Form data
+    if request.method == 'POST':
+
+        # Create a form instance and populate it with data from the request (binding):
+        trip_formset = TripFormSet(request.POST)
+        expedition_form = ExpeditionForm(request.POST)
+
+        # Check if the form is valid:
+        if expedition_form.is_valid() and trip_formset.is_valid():
+            # process the data in form.cleaned_data as required
+
+            expedition_instance.number_of_people = expedition_form.cleaned_data['number_of_people']
+            expedition_instance.trips.clear()
+
+            trips = trip_formset.save(
+                commit=False)  # i dont want to save all trips, because i dont want duplicates in DB
+            # for trip in trips:
+            for trip in trips:
+                """Check if this trip already exists in DB"""
+                trip, created = Trip.objects.get_or_create(park=trip.park,
+                                                           accommodation=trip.accommodation,
+                                                           days=trip.days)
+                print(trip)
+                expedition_instance.trips.add(trip)
+            expedition_instance.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
+        # # If this is a GET (or any other method) create the default form.
+    else:
+        expedition_form = ExpeditionForm(instance=Expedition.objects.get(id=pk))
+        trip_formset = TripFormSet(queryset=Expedition.objects.get(id=pk).trips.all())
+
+    context = {
+        'trip_formset': trip_formset,
+        'expedition_form': expedition_form,
+    }
+    return render(request, 'catalog/create_expedition.html', context)
+
+
+class ExpeditionDelete(generic.DeleteView):
+    model = Expedition
+    success_url = reverse_lazy('expeditions', kwargs={'query': "my_expeditions"})

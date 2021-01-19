@@ -12,7 +12,11 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+    {% if query == "recommended" %}
   <h1>Our recommended expeditions</h1>
+    {% elif query == "my_expeditions"%}
+    <h1>My expeditions</h1>
+    {% endif %}
   {% if expedition_list %}
   <ul>
     {% for expedition in expedition_list %}
@@ -22,9 +26,17 @@
                 <b>Park: </b>{{ trip.park }}, <b>Accommodation: </b>{{ trip.accommodation }}, <b>Days: </b>{{ trip.days }}
             </li>
         {% endfor %}
+            {% if query == "recommended" %}
+      <a href="{{ expedition.get_absolute_url_rec }}">I want this</a>
+    {% elif query == "my_expeditions"%}
+    <a href="{{ expedition.get_absolute_url_my }}">Edit</a>
+    <a href="{% url 'expedition-delete'  pk=expedition.id %}">Delete</a>
+    {% endif %}
+        <hr>
     {% endfor %}
   </ul>
   {% else %}
-    <p>There are no recommended expeditions currently.</p>
+    <p>There are no expeditions currently.</p>
   {% endif %}
+    <a href="{% url 'create-expedition' %}">Create your own expedition</a>
 {% endblock %}

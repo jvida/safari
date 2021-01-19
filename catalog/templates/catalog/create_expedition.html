@@ -1,0 +1,42 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Create your expedition</h2>
+    {{ customer }}
+  <form id="formcontainer" method="post">
+    {% csrf_token %}
+   {{ trip_formset.management_form }}
+    {{ trip_formset.non_form_errors }}
+  {{ expedition_form.errors }}
+    {% for error in trip_formset.errors %}
+        {{ error }}
+    {% endfor %}
+      {% for form in trip_formset %}
+          <div class="form-container">
+          <h3>Trip</h3>
+            {{ form.as_p }}
+          </div>
+        {% endfor %}
+    {{ expedition_form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+<p id="jqtest"></p>
+    <script type="text/javascript">
+    $(function() {
+        $('.form-container').formset({addText: 'Add another trip', deleteText: 'Remove this trip'});
+    })
+</script>
+{% endblock %}
