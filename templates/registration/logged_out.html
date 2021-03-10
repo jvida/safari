@@ -1,17 +1,23 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Title</title>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#</body>#}
-{#</html>#}
 
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <p>Logged out!</p>
-  <a href="{% url 'login'%}">Click here to login again.</a>
+  <div class="px-4 pt-4">
+    <h1>Logout</h1>
+  </div>
+
+  <div class="container">
+{#    <div class="row justify-content-center">#}
+{#      <div class="col-lg-12">#}
+{#        <div class="p-5">#}
+{#          <p>Logged out!</p>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+    <div class="row justify-content-center">
+      <div class="d-grid gap-2 col-5 mx-auto py-5">
+          <a class="btn btn-primary" href="{% url 'login'%}" role="button">Click here to login again.</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,42 +1,42 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Title</title>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#</body>#}
-{#</html>#}
-
-
 
 {% extends "base_generic.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-  <h2>Create your expedition</h2>
-    {{ customer }}
-  <form id="formcontainer" method="post">
-    {% csrf_token %}
-   {{ trip_formset.management_form }}
-    {{ trip_formset.non_form_errors }}
-  {{ expedition_form.errors }}
-    {% for error in trip_formset.errors %}
-        {{ error }}
-    {% endfor %}
-      {% for form in trip_formset %}
-          <div class="form-container">
-          <h3>Trip</h3>
-            {{ form.as_p }}
-          </div>
-        {% endfor %}
-    {{ expedition_form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
-<p id="jqtest"></p>
-    <script type="text/javascript">
+  <div class="px-4 pt-4">
+    <h1>Create your ideal expedition</h1>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <div class="p-5">
+          <form id="form-container" method="post">
+            {% csrf_token %}
+            {{ trip_formset.management_form }}
+
+            {% for form in trip_formset %}
+              <div class="crispy-form pb-3">
+                <h2>Trip</h2>
+                {{ form|crispy }}
+              </div>
+            {% endfor %}
+            <div class="crispy-form-expedition">
+              {{ expedition_form|crispy }}
+            </div>
+            <div class="d-grid gap-2 col-5 mx-auto py-5">
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
     $(function() {
-        $('.form-container').formset({addText: 'Add another trip', deleteText: 'Remove this trip'});
+        $('.crispy-form').formset({addText: 'Add another trip', deleteText: 'Remove this trip'});
     })
-</script>
+  </script>
 {% endblock %}

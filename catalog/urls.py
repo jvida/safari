@@ -4,8 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('parks/', views.ParkListView.as_view(), name='parks'),
-    path('accommodation/', views.AccommodationListView.as_view(), name='accommodations'),
-    # path('expeditions/', views.ExpeditionListView.as_view(), name='expeditions'),
+    # path('accommodation/', views.AccommodationListView.as_view(), name='accommodations'),
     path('expeditions/<str:query>/', views.ExpeditionListView.as_view(), name='expeditions'),
     path('signup/', views.create_new_user, name='signup'),
     path('profile/', views.customer_profile_view, name='profile'),
@@ -18,4 +17,6 @@ urlpatterns = [
     path('expedition/add/<int:pk>', views.add_recommended_expedition, name='add-recommended-expedition'),
     path('expedition/edit/<int:pk>', views.edit_my_expedition, name='edit-my-expedition'),
     path('expedition/delete/<int:pk>', views.ExpeditionDelete.as_view(), name='expedition-delete'),
+    path('about-us/', views.about_us, name='about-us'),
+    # path('gallery/', views.gallery, name='gallery'),
 ]

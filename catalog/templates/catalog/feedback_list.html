@@ -1,21 +1,19 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Title</title>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#</body>#}
-{#</html>#}
 
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Feedbacks</h1>
-  {% if feedback_list %}
+  <div class="px-4 py-4">
+    <h1>Feedbacks</h1>
+  </div>
+
+  <div class="container">
+
+          {% if feedback_list %}
   <ul>
     {% for feedback in feedback_list %}
+      <div class="row justify-content-center" id="feedback">
+      <div class="col-lg-10 border rounded" style="background-color: #eaecec">
+        <div class="p-4">
         <h2>{{ feedback.customer }}{{ feedback.customer.user.id }}</h2>
             <li>
                 <p>{{ feedback.content }}</p>
@@ -29,11 +27,16 @@
             <a href="{% url 'feedback-update' feedback.id %}">Edit</a>
             <a href="{% url 'feedback-delete' feedback.id %}">Delete</a>
         {% endif %}
-        <hr>
+              </div>
+      </div>
+    </div>
     {% endfor %}
   </ul>
   {% else %}
     <p>There are no feedbacks currently.</p>
   {% endif %}
-    <a href="{% url 'feedback-create' %}">Create feedback</a>
+
+          <a href="{% url 'feedback-create' %}">Create feedback</a>
+
+  </div>
 {% endblock %}

@@ -9,34 +9,155 @@
 {#</body>#}
 {#</html>#}
 
+{#{% extends "base_generic.html" %}#}
+{##}
+{#{% block content %}#}
+{#    {% if query == "recommended" %}#}
+{#  <h1>Our recommended expeditions</h1>#}
+{#    {% elif query == "my_expeditions"%}#}
+{#    <h1>My expeditions</h1>#}
+{#    {% endif %}#}
+{#  {% if expedition_list %}#}
+{#  <ul>#}
+{#    {% for expedition in expedition_list %}#}
+{#        <h2>{{ expedition }}</h2>#}
+{#        {% for trip in expedition.trips.all %}#}
+{#            <li>#}
+{#                <b>Park: </b>{{ trip.park }}, <b>Accommodation: </b>{{ trip.accommodation }}, <b>Days: </b>{{ trip.days }}#}
+{#            </li>#}
+{#        {% endfor %}#}
+{#            {% if query == "recommended" %}#}
+{#             <p>{{ expedition.itinerary }}</p>#}
+{#              {% for plan in expedition.itinerary.dailyPlans.all %}#}
+{#              <li>{{ plan }}</li><p>{{ plan.description }}</p>#}
+{#              {% endfor %}#}
+{#      <a href="{{ expedition.get_absolute_url_rec }}">I want this</a>#}
+{#    {% elif query == "my_expeditions"%}#}
+{#    <a href="{{ expedition.get_absolute_url_my }}">Edit</a>#}
+{#    <a href="{% url 'expedition-delete'  pk=expedition.id %}">Delete</a>#}
+{#    {% endif %}#}
+{#        <hr>#}
+{#    {% endfor %}#}
+{#  </ul>#}
+{#  {% else %}#}
+{#    <p>There are no expeditions currently.</p>#}
+{#  {% endif %}#}
+{#    <a href="{% url 'create-expedition' %}">Create your own expedition</a>#}
+{#{% endblock %}#}
+
+
 {% extends "base_generic.html" %}
 
+{% load static %}
+
 {% block content %}
+  <div class="px-4 pt-4">
     {% if query == "recommended" %}
-  <h1>Our recommended expeditions</h1>
+      <h1>Our recommended expeditions</h1>
     {% elif query == "my_expeditions"%}
-    <h1>My expeditions</h1>
+      <h1>My expeditions</h1>
     {% endif %}
+  </div>
+
   {% if expedition_list %}
-  <ul>
-    {% for expedition in expedition_list %}
-        <h2>{{ expedition }}</h2>
-        {% for trip in expedition.trips.all %}
-            <li>
-                <b>Park: </b>{{ trip.park }}, <b>Accommodation: </b>{{ trip.accommodation }}, <b>Days: </b>{{ trip.days }}
-            </li>
+{#    <ul>#}
+      {% for expedition in expedition_list %}
+{#        <h2><a id="{{ expedition.name }}">{{ expedition.name }}</a></h2>#}
+
+{#        {% for trip in expedition.trips.all %}#}
+{#          <li>#}
+{#            <b>Park: </b>{{ trip.park }}, <b>Accommodation: </b>{{ trip.accommodation }}, <b>Days: </b>{{ trip.days }}#}
+{#          </li>#}
+{#        {% endfor %}#}
+
+        {% if query == "recommended" %}
+{#          <p>{{ expedition.itinerary }}</p>#}
+{#          {{ expedition.itinerary.description }}#}
+
+
+          <a id="{{ expedition.name }}"></a> {# TODO toto mozno este niekam inam dat #}
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-7">
+                <div class="p-5">
+                  <h2 class="display-4">{{ expedition.itinerary }} safari...</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                </div>
+              </div>
+              <div class="col-lg-5 ">
+                <div class="py-3 px-5">
+{#                    <img class="img-fluid rounded-circle" src={% static 'img/kruh5.jpg' %} alt="">#}
+                  <ul style="background-color: #eaecec">
+                    {% for trip in expedition.trips.all %}
+                      <li>
+                        <b>Park: </b>{{ trip.park }}<br> <b>Accommodation: </b>{{ trip.accommodation }}<br> <b>Days: </b>{{ trip.days }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-lg-12">
+                <div class="p-5">
+                  <div class="accordion" id="accordion_{{ forloop.counter }}" style="">
+          {% for plan in expedition.itinerary.dailyPlans.all %}
+            {% if forloop.counter == 1 %}
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                    {{ plan }}
+                  </button>
+                </h2>
+                <div id="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="accordion-collapse collapse show" aria-labelledby="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" data-bs-parent="#accordion_{{ forloop.parentloop.counter }}">
+                  <div class="accordion-body">
+                    {{ plan.description }}
+                  </div>
+                </div>
+              </div>
+            {% else %}
+{#              {% if forloop.counter|divisibleby:2 %}#}
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                    {{ plan }}
+                  </button>
+                </h2>
+                <div id="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" data-bs-parent="#accordion_{{ forloop.parentloop.counter }}">
+                  <div class="accordion-body">
+                    {{ plan.description }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+{#                    <a href="{{ expedition.get_absolute_url_rec }}">I want this</a>#}
+                </div>
+              </div>
+            </div>
+            <div class="d-grid gap-2 col-5 mx-auto pb-5">
+              <a class="btn btn-primary" href="{{ expedition.get_absolute_url_rec }}" role="button">I want this</a>
+            </div>
+          </div>
+
+
+
+{#          <a href="{{ expedition.get_absolute_url_rec }}">I want this</a>#}
+        {% elif query == "my_expeditions"%}
+                  {% for trip in expedition.trips.all %}
+          <li>
+            <b>Park: </b>{{ trip.park }}, <b>Accommodation: </b>{{ trip.accommodation }}, <b>Days: </b>{{ trip.days }}
+          </li>
         {% endfor %}
-            {% if query == "recommended" %}
-      <a href="{{ expedition.get_absolute_url_rec }}">I want this</a>
-    {% elif query == "my_expeditions"%}
-    <a href="{{ expedition.get_absolute_url_my }}">Edit</a>
-    <a href="{% url 'expedition-delete'  pk=expedition.id %}">Delete</a>
-    {% endif %}
+          <a href="{{ expedition.get_absolute_url_my }}">Edit</a>
+          <a href="{% url 'expedition-delete'  pk=expedition.id %}">Delete</a>
+        {% endif %}
         <hr>
-    {% endfor %}
-  </ul>
+      {% endfor %}
+{#    </ul>#}
   {% else %}
     <p>There are no expeditions currently.</p>
   {% endif %}
-    <a href="{% url 'create-expedition' %}">Create your own expedition</a>
+  <a href="{% url 'create-expedition' %}">Create your own expedition</a>
 {% endblock %}

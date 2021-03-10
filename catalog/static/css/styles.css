@@ -1,5 +1,95 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
+/*.sidebar-nav {*/
+/*    margin-top: 20px;*/
+/*    padding: 0;*/
+/*    list-style: none;*/
+/*}*/
+
+/* so header image has max width*/
+.container-header-image, #container-header-title {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* so navbar has max width*/
+.container-fluid {
+    max-width: 1400px;
+}
+
+.img-fluid {
+    /*margin: 0 auto;*/
+}
+
+.bg-company-red {
+    background-color: black;
+}
+
+/* so adding/removing trips adds/removes also <hr> after each trip */
+.crispy-form {
+    margin-bottom: 50px;
+    border-bottom: 1px solid black;
+}
+
+.add-row {
+    margin-top: -45px;
+}
+
+.form-group {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.invalid-feedback {
+    margin-bottom: -0.25rem;
+}
+
+/*a.delete-row, a.add-row {*/
+/*    position: absolute;*/
+/*    right: 7rem;*/
+/*}*/
+
+/* so header image has max width*/
+.container-offer-image-start {
+    max-width: 450px;
+    margin-right: 1rem;
+    /*margin-top: 0.5rem;*/
+}
+
+/* so park/accommodation image has max width*/
+.container-offer-image-end {
+    max-width: 450px;
+    margin-left: 1rem;
+    /*margin-top: 0.5rem;*/
+}
+
+/* so footer is fixed at the bottom of a page */
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 4.5rem;    /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /*margin-top: 50rem;*/
+}
+/*  */
+
+.container-header-logo {
+    max-width: 130px;
+    margin: 0 auto;
+}
+
+#feedback {
+    padding-bottom: 1rem;
+}
+
+a[href^="mailto:"], a[href^="tel:"] {
+  /*font-family: sans-serif;*/
+  color: black;
+  /*font-size: 11px;*/
 }

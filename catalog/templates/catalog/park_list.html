@@ -11,30 +11,84 @@
 
 {% extends "base_generic.html" %}
 
-{% block content %}
-  <h1>All parks we offer</h1>
-  {% if park_list %}
-  <ul>
-    {% for park in park_list %}
-      <li>
-        <b>{{ park.name }}</b> {{park.location}} {{ park.description }}
-      </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no park currently.</p>
-  {% endif %}
+{% load static %}
 
-  <h1>All accommodation options we offer</h1>
-  {% if accommodations %}
-  <ul>
-    {% for acc in accommodations %}
-      <li>
-        <b>{{ acc.type }}</b> {{ acc.description }} {{ acc.price_from }} - {{ acc.price_to }}
-      </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no accommodation options currently.</p>
-  {% endif %}
+{% block content %}
+
+  <section>
+    <div class="px-4 pt-4">
+      <h1>Parks we offer</h1>
+    </div>
+
+    {% if park_list %}
+      {% for park in park_list %}
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 p-5">
+              <div class="p-3">
+                <h3>{{ park }}</h3>
+              </div>
+              {% if forloop.counter|divisibleby:2 %}
+                <div class="container-offer-image-end float-end">
+              {% else %}
+                <div class="container-offer-image-start float-start">
+              {% endif %}
+                  <img src="{{ MEDIA_URL }}{{ park.picture }}" class="img-fluid rounded" alt="" id="imgdpc">
+                </div>
+                  {{ park.description }}
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            </div>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+    {% else %}
+      <p>There are no parks currently.</p>
+    {% endif %}
+  </section>
+
+
+  <section>
+    <div class="px-4 pt-4">
+      <h1>Accommodation options we offer</h1>
+    </div>
+
+    {% if accommodations %}
+      {% for accommodation in accommodations %}
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 p-5">
+              <div class="p-3">
+                <h3>{{ accommodation.type }} Price: {{ accommodation.price_from }} - {{ accommodation.price_to }}</h3>
+              </div>
+              {% if forloop.counter|divisibleby:2 %}
+                <div class="container-offer-image-end float-end">
+              {% else %}
+                <div class="container-offer-image-start float-start">
+              {% endif %}
+                  <img src="{% static 'img/typek.jpg' %}" class="img-fluid rounded-circle" alt="" id="imgdpc">
+                </div>
+                {{ accommodation.description }}
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            </div>
+          </div>
+        </div>
+        {% if forloop.counter != accommodations.count %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>There are no accommodation options currently.</p>
+    {% endif %}
+  </section>
 {% endblock %}

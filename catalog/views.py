@@ -32,8 +32,8 @@ class ParkListView(generic.ListView):
         return context
 
 
-class AccommodationListView(generic.ListView):
-    model = Accommodation
+# class AccommodationListView(generic.ListView):
+#     model = Accommodation
 
 
 class ExpeditionListView(generic.ListView):
@@ -293,3 +293,17 @@ def edit_my_expedition(request, pk):
 class ExpeditionDelete(generic.DeleteView):
     model = Expedition
     success_url = reverse_lazy('expeditions', kwargs={'query': "my_expeditions"})
+
+
+def about_us(request):
+    """View function for about us page of site."""
+
+    # Render the HTML template catalog/about_us.html with the data in the context variable
+    return render(request, 'catalog/about_us.html')
+
+
+# def gallery(request):
+#     """View function for home page of site."""
+#
+#     # Render the HTML template index.html with the data in the context variable
+#     return render(request, 'catalog/gallery.html')

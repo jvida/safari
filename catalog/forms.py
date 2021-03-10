@@ -19,7 +19,11 @@ class CreateNewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
-    phone_number = forms.RegexField(regex=r'^\+\d{8,15}', max_length=16, required=False)
+    phone_number = forms.RegexField(regex=r'^\+\d{8,15}', max_length=16, required=False, help_text='Enter your phone '
+                                                                                                   'number in '
+                                                                                                   'international '
+                                                                                                   'format. (e.g. '
+                                                                                                   '+421944123132)')
 
     class Meta:
         model = User
@@ -28,8 +32,17 @@ class CreateNewUserForm(UserCreationForm):
     def clean(self):
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']
+        username = self.cleaned_data['username']
+        email = self.cleaned_data['email']
 
+        # validation of first and last name
         errors = name_validation(first_name, last_name)
+
+        # validation of username - checking whether already exists in DB or nor
+        if User.objects.filter(username=username).exists():
+            errors['username'] = _('The username is already in use. Please use a different username.')
+        if User.objects.filter(email=email).exists():
+            errors['email'] = _('The email is already in use. Please use a different email.')
         if errors:
             raise ValidationError(errors)
 
@@ -77,9 +90,10 @@ class BaseTripFormSet(forms.BaseModelFormSet):
     def clean(self):
         """Check that no trips have the same park."""
 
-        if any(self.errors):
-            # Don't bother validating the formset unless each form is valid on its own
-            return
+        # toto som pre teraz vynechal, nech to rovno ukaze aj error o rovnakych parkoch spolu s ostatnymi errormi
+        # if any(self.errors):
+        #     # Don't bother validating the formset unless each form is valid on its own
+        #     return
 
         parks = []
         for form in self.forms:
@@ -88,7 +102,8 @@ class BaseTripFormSet(forms.BaseModelFormSet):
             park = form.cleaned_data['park']    # TODO check if park exists
             if park:
                 if park in parks:
-                    raise ValidationError(_('Trips can\'t have the same park.'))
+                    form.add_error('park', 'Trips can\'t have same parks.')
+                    # raise ValidationError(_('Trips can\'t have same parks.'))
                 parks.append(park)
 
 
@@ -102,6 +117,14 @@ class ExpeditionForm(forms.ModelForm):
         if not number_of_people:
             raise ValidationError(_('Enter number of people.'))
         return number_of_people
+
+    # toto by som pouzil, aby form ukazal warning, ze field musi byt filled
+    # ale bohuzial u tripformsetu je problem, ze modelfactory ten input html negeneruje s required
+    # takze aby som to mal konzistentne, tak tu si budem riesit required sam svojim errorom
+    # a preto nepouzijem toto, ale az to nad tymto, aj ked to bude inak ako u register formularu
+    # def __init__(self, *args, **kwargs):
+    #     super(ExpeditionForm, self).__init__(*args, **kwargs)
+    #     self.fields['number_of_people'].required = True
 
 
 class TripForm(forms.ModelForm):
