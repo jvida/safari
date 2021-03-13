@@ -1,0 +1,28 @@
+
+{% extends "base_generic.html" %}
+
+{% load static %}
+{% load catalog_extras %}
+
+{% block content %}
+  <div class="px-4 pt-4">
+    <h1>Gallery</h1>
+  </div>
+
+  <div class="container">
+    <div class="row row-cols-4 justify-content-start p-5">
+      {% if images %}
+        {% for img in images %}
+          {% with 'img/gallery/'|add_str:img as img_path %}
+            <div class="col pt-3">
+              <a class="example-image-link" href="{% static img_path %}" data-lightbox="gallery-1">
+                <img class="img-fluid rounded" src="{% static img_path %}" alt="">
+              </a>
+            </div>
+          {% endwith %}
+      {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

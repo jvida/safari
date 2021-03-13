@@ -18,5 +18,5 @@ urlpatterns = [
     path('expedition/edit/<int:pk>', views.edit_my_expedition, name='edit-my-expedition'),
     path('expedition/delete/<int:pk>', views.ExpeditionDelete.as_view(), name='expedition-delete'),
     path('about-us/', views.about_us, name='about-us'),
-    # path('gallery/', views.gallery, name='gallery'),
+    path('gallery/', views.gallery, name='gallery'),
 ]

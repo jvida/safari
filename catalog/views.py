@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from catalog.models import Park, Accommodation, Expedition, Trip, Customer, Feedback
 from django.views import generic
@@ -302,8 +305,13 @@ def about_us(request):
     return render(request, 'catalog/about_us.html')
 
 
-# def gallery(request):
-#     """View function for home page of site."""
-#
-#     # Render the HTML template index.html with the data in the context variable
-#     return render(request, 'catalog/gallery.html')
+def gallery(request):
+    """View function for home page of site."""
+
+    context = {}
+    # files = os.listdir(os.path.join(settings.STATIC_ROOT, "img/gallery/"))
+    gallery_images = os.listdir('catalog/static/img/gallery/')   # TODO toto mozno este nejako upravit rozumnejsie
+    context['images'] = gallery_images
+
+    # Render the HTML template catalog/gallery.html with the data in the context variable
+    return render(request, 'catalog/gallery.html', context)

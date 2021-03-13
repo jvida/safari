@@ -93,3 +93,8 @@ a[href^="mailto:"], a[href^="tel:"] {
   color: black;
   /*font-size: 11px;*/
 }
+
+/*.gallery-img {*/
+/*    max-width: 200px;*/
+/*    max-height: 200px;*/
+/*}*/
