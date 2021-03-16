@@ -98,3 +98,12 @@ a[href^="mailto:"], a[href^="tel:"] {
 /*    max-width: 200px;*/
 /*    max-height: 200px;*/
 /*}*/
+
+
+.feedback-header .buttons {
+    float: right;
+}
+
+.feedback-header .buttons > img {
+    margin-left: .5rem;
+}
