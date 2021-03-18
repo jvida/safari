@@ -14,25 +14,40 @@
 
     {% for feedback in feedback_list %}
       <div class="row justify-content-center px-5 py-2" id="feedback">
-        <div class="col-lg-10 border" style="background-color: #f6f6f6">
-          <div class="p-4">
+        <div class="col-lg-10 border rounded" style="background-color: #f6f6f6">
+          <div class="px-2 py-3">
             <div class="feedback-header">
-              <b>{{ feedback.customer.user.username }}</b> wrote this review on {{ feedback.date_created.date }}
+              <div class="row">
+              <div class="col-lg-10 col-md-10" id="kokot">
+                <div class="feedback-header-img">
+        <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ feedback.customer.picture }}" alt="">
+      </div>
+
+              <span><b>{{ feedback.customer.user.username }}</b> <br>{{ feedback.date_created.date }}
               {% if feedback.date_created.date != feedback.date_last_edit.date or feedback.date_created.ctime != feedback.date_last_edit.ctime %}
                 (<i>edited on {{ feedback.date_last_edit.date }}</i>)
-              {% endif %}
+              {% endif %}</span>
+              </div>
 
             {% if feedback.customer.user == request.user %}
-              <span class="buttons">
+              <div class="col-lg-2 col-md-2" style="text-align: end" id="feedback-buttons">
 {#                <a href="{% url 'feedback-update' feedback.id %}">Edit</a>#}
 {#                <a href="{% url 'feedback-delete' feedback.id %}">Delete</a>#}
-                <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Bootstrap" width="20" height="20">
-                <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
-              </span>
+                <a href="{% url 'feedback-update' feedback.id %}">
+                  <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
+                </a>
+                <a href="{% url 'feedback-delete' feedback.id %}">
+                  <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
+                </a>
+{#                <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Bootstrap" width="20" height="20">#}
+{#                <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">#}
+</div>
             {% endif %}
+
+              </div>
             </div>
             <div class="feedback-body py-3">
-              <h2>Some title</h2>
+{#              <h2>Some title</h2>#}
               <p>"{{ feedback.content }}"</p>
 
 {#        {% if feedback.customer.user == request.user %}#}
@@ -52,7 +67,9 @@
     <p>There are no feedbacks currently.</p>
   {% endif %}
 
-          <a href="{% url 'feedback-create' %}">Create feedback</a>
-
+{#          <a href="{% url 'feedback-create' %}">Create feedback</a>#}
+      <div class="d-grid gap-2 col-5 mx-auto pb-5 pt-4">
+              <a class="btn btn-primary" href="{% url 'feedback-create' %}" role="button">Add feedback</a>
+            </div>
   </div>
 {% endblock %}

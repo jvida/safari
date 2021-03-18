@@ -98,7 +98,7 @@
               <a class="nav-link active" aria-current="page" href="{% url 'logout'%}">Logout</a>
             </li>
           {% else %}
-            {% if not "accounts" in request.path %}
+            {% if not "accounts" in request.path and not "signup" in request.path %}
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={{request.path}}">Register</a>
               </li>
@@ -129,7 +129,27 @@
 {#        {% block sidebar %}{% endblock %}#}
 {#      </div>#}
       <div class="col-sm-12">
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
+
+      {% block pagination %}
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+      {% endblock %}
+
       </div>
     </div>
   </div>

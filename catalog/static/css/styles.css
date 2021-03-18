@@ -99,11 +99,28 @@ a[href^="mailto:"], a[href^="tel:"] {
 /*    max-height: 200px;*/
 /*}*/
 
-
-.feedback-header .buttons {
-    float: right;
+.feedback-header > span {
+    max-width: 4.5rem;
+}
+.feedback-header-img {
+    max-width: 4.5rem;
 }
 
-.feedback-header .buttons > img {
-    margin-left: .5rem;
+#feedback-buttons > a {
+    text-decoration: none;
+}
+
+#feedback-buttons > a > img {
+    text-decoration: none;
+    margin-left: .75rem;
+}
+
+#kokot {
+      display:flex;
+  align-items:flex-start;
+  flex-direction: row;
+}
+
+#kokot > span {
+    padding-left: 0.5rem;
 }

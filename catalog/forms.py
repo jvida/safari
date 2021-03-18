@@ -15,6 +15,16 @@ def name_validation(first_name, last_name):
     return errors
 
 
+def img_validation(picture, mb_limit):
+    errors = {}
+    # if it's str, it's loaded frim DB => not updated picture => no need to check it
+    if not isinstance(picture, str):
+        if picture:
+            if picture.size > mb_limit * 1024 * 1024:
+                errors['picture'] = _(f'Image file too large ( > {mb_limit}mb )')
+    return errors
+
+
 class CreateNewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=50)
@@ -53,7 +63,13 @@ class EditCustomerProfile(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ['phone_number']
+        fields = ['phone_number', 'picture']
+
+    def clean(self):
+        picture = self.cleaned_data["picture"]
+        errors = img_validation(picture, mb_limit=1)
+        if errors:
+            raise ValidationError(errors)
 
     # alebo takto no
     # def clean_phone_number(self):

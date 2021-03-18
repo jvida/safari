@@ -16,6 +16,7 @@
     {{ customer }}<hr>
     {{ customer.user.email }}<hr>
     {{ customer.phone_number }}<hr>
+    <img src="{{ MEDIA_URL }}{{ customer.picture }}">
     <p><a href="{% url 'profile-edit'%}">Edit</a></p>
     <p><a href="{% url 'password_reset' %}">Change password</a></p>
 {% endblock %}

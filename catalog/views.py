@@ -99,13 +99,25 @@ def edit_user_profile(request):
     # If this is a POST request then process the Form data
     if request.method == 'POST':
         user_form = EditUserProfile(request.POST, instance=request.user)
-        customer_form = EditCustomerProfile(request.POST, instance=request.user)
+        customer_form = EditCustomerProfile(request.POST, request.FILES, instance=request.user)
         # Check if forms are valid:
         if user_form.is_valid() and customer_form.is_valid():
             # process the data in forms
             phone_number = customer_form.cleaned_data['phone_number']
             customer = Customer.objects.get(user=request.user)
             customer.phone_number = phone_number
+
+            # check if user chose a new profile picture
+            # if so, it's saved
+            # otherwise do nothing
+            # (i have to do it this way, cause if user doesnt choose a new img, form gives the default one,
+            # instead of current one)
+            if request.FILES:
+                picture = customer_form.cleaned_data['picture']
+                # picture is resized to a square
+                with Image.open(picture.file) as image:
+                    picture_square = resize_image(image=image, length=700, content_file=True)
+                    customer.picture.save(picture.name, picture_square)
             user_form.save()
             customer.save()
             return HttpResponseRedirect(reverse('profile'))
@@ -134,6 +146,8 @@ def customer_profile_view(request):
 
 class FeedbackListView(generic.ListView):
     model = Feedback
+    ordering = ['-date_last_edit']
+    paginate_by = 1
 
 
 class FeedbackCreate(generic.CreateView):

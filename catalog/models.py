@@ -17,6 +17,7 @@ class Animal(models.Model):
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=16, blank=True, help_text='Enter your phone number in international format. (e.g. +421944123132)')
+    picture = models.ImageField(upload_to='profile_imgs/', default='profile_imgs/anonymous-user.png', help_text='Upload an image.')
 
     def __str__(self):
         """String for representing the Model object."""
