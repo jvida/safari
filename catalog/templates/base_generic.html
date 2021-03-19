@@ -20,185 +20,156 @@
 <body>
   <header class="header-title">
     <div class="container" id="container-header-title">
-  <div class="row align-items-center">
-    <div class="col-lg-2 col-md-2 d-none d-md-block ">
-      <div class="container-header-logo">
-        <img class="img-fluid" src={% static 'img/logo.jpg' %} alt="">
+      <div class="row align-items-center">
+        <div class="col-lg-2 col-md-2 d-none d-md-block ">
+          <div class="container-header-logo">
+            <img class="img-fluid" src={% static 'img/logo.jpg' %} alt="">
+          </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-12 d-none d-sm-block ">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8  my-auto">
+              <h1><i>Wilderness MANIAC SAFARIS</i></h1>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 " style="text-align: end">
+              <h3><a href="tel:+421-944-412-335">+421-944-412-335</a></h3>
+              <h3><a href="mailto:ahojky@gmail.com">ahojky@gmail.com</a></h3>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-lg-10 col-md-10 col-sm-12 d-none d-sm-block ">
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8  my-auto">
-          <h1><i>Wilderness MANIAC SAFARIS</i></h1>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 " style="text-align: end">
-          <h3><a href="tel:+421-944-412-335">+421-944-412-335</a></h3>
-      <h3><a href="mailto:ahojky@gmail.com">ahojky@gmail.com</a></h3>
-        </div>
-    </div>
-  </div>
-    </div>
     </div>
   </header>
 
+  <div id="page-container"> {# these two divs are used so we can have a fixed footer #}
+    <div id="content-wrap"> {# these two #}
+      <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-company-red">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
 
-<div id="page-container"> {# these two divs are used so we can have a fixed footer #}
-   <div id="content-wrap"> {# these two #}
-
-  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-company-red">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-
-      <div class="collapse navbar-collapse px-4" id="navbarNavAltMarkup">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="{% url 'parks' %}">Parks/Accommodation</a>
-          </li>
-{#          <li class="nav-item">#}
-{#            <a class="nav-link active" href="{% url 'accommodations' %}">Accommodation</a>#}
-{#          </li>#}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Expeditions
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#7-day">7-day</a></li>
-              <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#5-day">5-day</a></li>
-              <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#3-day">3-day</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="{% url 'gallery' %}">Gallery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="{% url 'feedbacks' %}">Feedbacks</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="{% url 'about-us' %}">About Us</a>
-          </li>
-        </ul>
-
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          {% if user.is_authenticated %}
+        <div class="collapse navbar-collapse px-4" id="navbarNavAltMarkup">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">{{ user.get_username }}</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'expeditions'  query='my_expeditions' %}">My Expeditions</a>
+              <a class="nav-link active" href="{% url 'parks' %}">Parks/Accommodation</a>
+            </li>
+  {#          <li class="nav-item">#}
+  {#            <a class="nav-link active" href="{% url 'accommodations' %}">Accommodation</a>#}
+  {#          </li>#}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Expeditions
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#7-day">7-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#5-day">5-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#3-day">3-day</a></li>
+              </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'logout'%}">Logout</a>
+              <a class="nav-link active" href="{% url 'gallery' %}">Gallery</a>
             </li>
-          {% else %}
-            {% if not "accounts" in request.path and not "signup" in request.path %}
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'feedbacks' %}">Feedbacks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'about-us' %}">About Us</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={{request.path}}">Register</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">{{ user.get_username }}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'expeditions'  query='my_expeditions' %}">My Expeditions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'logout'%}">Logout</a>
               </li>
             {% else %}
-              <li class="nav-item"> {# TODO toto som doplnil - treba otestovat ci to je take spravanie ako chcem #}
-                <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={% url 'index'%}">Register</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={% url 'index'%}">Login</a>
-              </li>
+              {% if not "accounts" in request.path and not "signup" in request.path %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={{request.path}}">Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                </li>
+              {% else %}
+                <li class="nav-item"> {# TODO toto som doplnil - treba otestovat ci to je take spravanie ako chcem #}
+                  <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={% url 'index'%}">Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={% url 'index'%}">Login</a>
+                </li>
+              {% endif %}
             {% endif %}
-          {% endif %}
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+      </nav>
 
-  <div class="container-header-image">
-    <img src="{% static 'img/skuska5.jpg' %}" class="img-fluid" alt="...">
-{#  </div>#}
+      <div class="container-header-image">
+        <img src="{% static 'img/skuska5.jpg' %}" class="img-fluid" alt="...">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              {% block content %}
 
-  <div class="container">
-    <div class="row">
-{#      <div class="col-sm-2" style="background-color: #dbdede">#}
-{#        {% block sidebar %}{% endblock %}#}
-{#      </div>#}
-      <div class="col-sm-12">
-        {% block content %}
-        {% endblock %}
+              {% endblock %}
 
-      {% block pagination %}
-        {% if is_paginated %}
-            <div class="pagination">
-                <span class="page-links">
-                    {% if page_obj.has_previous %}
-                        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
-                    <span class="page-current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-                    {% if page_obj.has_next %}
-                        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-                    {% endif %}
-                </span>
+              {% block pagination %}
+                {% if is_paginated %}
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      {% if page_obj.has_previous %}
+                        <li class="page-item">
+                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">&laquo;</a>
+                        </li>
+                      {% endif %}
+                      {% for i in page_obj.paginator.page_range %}
+                        {# I want always first, last, current and previous and next page of current one#}
+                        {% if i == 1 or i == page_obj.paginator.num_pages or i == page_obj.number or i == page_obj.number|add:-1 or i == page_obj.number|add:1 %}
+                          {%  if page_obj.number == i %}
+                            <li class="page-item active">
+                          {% else %}
+                            <li class="page-item">
+                          {% endif %}
+                          <a class="page-link" href="{{ request.path }}?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                      {% if page_obj.has_next %}
+                        <li class="page-item">
+                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">&raquo;</a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </nav>
+                {% endif %}
+              {% endblock %}
+              {% block extra_button %} {# when i need a button under pagination (e.g. feedbacks #}
+
+              {% endblock %}
             </div>
-        {% endif %}
-      {% endblock %}
-
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    <footer class="py-4" style="background-color: black" id="footer">
+      <div class="container">
+        <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2020</p>
+      </div>
+    </footer>
   </div>
 
-   </div>
-  <footer class="py-4" style="background-color: black" id="footer">
-    <div class="container">
-      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2020</p>
-    </div>
-  </footer>
-</div>
-
-<script src="{% static 'javascript/app.js' %}"></script>
-<script src="{% static 'javascript/lightbox.js' %}"></script>
+  <script src="{% static 'javascript/app.js' %}"></script>
+  <script src="{% static 'javascript/lightbox.js' %}"></script>
 </body>
 </html>
-
-
-{#  <div class="container-fluid">#}
-{#    <div class="row">#}
-{#      <div class="col-sm-2">#}
-{#      {% block sidebar %}#}
-{#        <ul class="sidebar-nav">#}
-{#          <li class="active"><a href="{% url 'index' %}">Home</a></li>#}
-{#          <li><a href="{% url 'parks' %}">Parks</a></li>#}
-{#          <li><a href="{% url 'accommodations' %}">Accommodation options</a></li>#}
-{#          <li><a href="{% url 'expeditions'  query='recommended' %}">Recommended expeditions</a></li>#}
-{#            <li><a href="">Contacts</a></li>#}
-{#            <li><a href="{% url 'feedbacks' %}">Feedbacks</a></li>#}
-{#        <hr>#}
-{#        {% if user.is_authenticated %}#}
-{#            <li>User: {{ user.get_username }}</li>#}
-{#            <li><a href="{% url 'profile' %}">My Profile</a></li>#}
-{#            <li><a href="{% url 'expeditions'  query='my_expeditions' %}">My Expeditions</a></li>#}
-{#            <li><a href="{% url 'logout'%}?next={% url 'index'%}">Logout</a></li>#}
-{#        {% else %}#}
-{#            {% if not "accounts" in request.path%}#}
-{#                <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>#}
-{#                <li><a href="{% url 'signup'%}?next={{request.path}}">Sign Up</a></li>#}
-{#            {% else %}#}
-{#                <li><a href="{% url 'login'%}?next={% url 'index'%}">Login</a></li>#}
-{#            {% endif %}#}
-{#        {% endif %}#}
-{#        </ul>#}
-{#     {% endblock %}#}
-{#      </div>#}
-{#      <div class="col-sm-10 ">{% block content %}{% endblock %}</div>#}
-{#    </div>#}
-{#  </div>#}
-{#</body>#}
-{#</html>#}

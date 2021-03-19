@@ -1,5 +1,7 @@
 import re
 from django import forms
+from django.core.files import File
+
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm

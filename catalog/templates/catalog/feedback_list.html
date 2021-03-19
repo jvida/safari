@@ -68,8 +68,11 @@
   {% endif %}
 
 {#          <a href="{% url 'feedback-create' %}">Create feedback</a>#}
+  </div>
+{% endblock %}
+
+  {% block extra_button %}
       <div class="d-grid gap-2 col-5 mx-auto pb-5 pt-4">
               <a class="btn btn-primary" href="{% url 'feedback-create' %}" role="button">Add feedback</a>
             </div>
-  </div>
-{% endblock %}
+    {% endblock %}

@@ -1,5 +1,7 @@
 import os
 
+from .helper_functions import resize_image
+from PIL import Image
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from catalog.models import Park, Accommodation, Expedition, Trip, Customer, Feedback
