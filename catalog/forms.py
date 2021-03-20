@@ -5,7 +5,7 @@ from django.core.files import File
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
-from catalog.models import User, Customer, Expedition, Trip
+from catalog.models import User, Customer, Expedition, Trip, Feedback
 
 
 def name_validation(first_name, last_name):
@@ -155,3 +155,20 @@ class TripForm(forms.ModelForm):
     def has_changed(self):
         return True
 
+
+class FeedbackCreateForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ["content", "date_of_trip"]
+        widgets = {
+            'date_of_trip': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+
+
+class FeedbackUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ["content", "date_of_trip"]
+        widgets = {
+            'date_of_trip': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }

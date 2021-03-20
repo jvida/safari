@@ -11,11 +11,13 @@
 
 {% extends "base_generic.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
   <form action="" method="post">
     {% csrf_token %}
     <table>
-    {{ form.as_table }}
+    {{ form|crispy }}
     </table>
     <input type="submit" value="Submit">
   </form>

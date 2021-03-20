@@ -9,70 +9,61 @@
   </div>
 
   <div class="container">
+    {% if feedback_list %}
+      {% for feedback in feedback_list %}
+        <div class="row justify-content-center px-5 py-2">
+          <div class="col-lg-10 border rounded" id="feedback">
+            <div class="px-2 py-3">
+              <div class="feedback-header">
+                <div class="row">
+                  <div class="col-lg-10 col-md-10 col-sm-9 col-9" id="feedback-profile-area">
+                    <div class="feedback-header-img">
+                      <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ feedback.customer.picture }}" alt="">
+                    </div>
+                    <span>
+                      <b>{{ feedback.customer.user.username }}</b><br>{{ feedback.date_created.date }}
+                      {% if feedback.date_created.date != feedback.date_last_edit.date or feedback.date_created.ctime != feedback.date_last_edit.ctime %}
+                        (<i>edited on {{ feedback.date_last_edit.date }}</i>)
+                      {% endif %}
+                    </span>
+                  </div>
 
-          {% if feedback_list %}
-
-    {% for feedback in feedback_list %}
-      <div class="row justify-content-center px-5 py-2" id="feedback">
-        <div class="col-lg-10 border rounded" style="background-color: #f6f6f6">
-          <div class="px-2 py-3">
-            <div class="feedback-header">
-              <div class="row">
-              <div class="col-lg-10 col-md-10" id="kokot">
-                <div class="feedback-header-img">
-        <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ feedback.customer.picture }}" alt="">
-      </div>
-
-              <span><b>{{ feedback.customer.user.username }}</b> <br>{{ feedback.date_created.date }}
-              {% if feedback.date_created.date != feedback.date_last_edit.date or feedback.date_created.ctime != feedback.date_last_edit.ctime %}
-                (<i>edited on {{ feedback.date_last_edit.date }}</i>)
-              {% endif %}</span>
+                  {% if feedback.customer.user == request.user %}
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-3" id="feedback-buttons">
+                      <a href="{% url 'feedback-update' feedback.id %}">
+                        <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
+                      </a>
+                      <a href="{% url 'feedback-delete' feedback.id %}">
+                        <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
+                      </a>
+                    </div>
+                  {% endif %}
+                </div>
               </div>
 
-            {% if feedback.customer.user == request.user %}
-              <div class="col-lg-2 col-md-2" style="text-align: end" id="feedback-buttons">
-{#                <a href="{% url 'feedback-update' feedback.id %}">Edit</a>#}
-{#                <a href="{% url 'feedback-delete' feedback.id %}">Delete</a>#}
-                <a href="{% url 'feedback-update' feedback.id %}">
-                  <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
-                </a>
-                <a href="{% url 'feedback-delete' feedback.id %}">
-                  <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
-                </a>
-{#                <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Bootstrap" width="20" height="20">#}
-{#                <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">#}
-</div>
-            {% endif %}
+              <div class="feedback-body py-3">
+                <p>"{{ feedback.content }}"</p>
+              </div>
 
+              <div class="feedback-footer">
+                <b>Date of trip:</b> {{ feedback.date_of_trip }}
               </div>
             </div>
-            <div class="feedback-body py-3">
-{#              <h2>Some title</h2>#}
-              <p>"{{ feedback.content }}"</p>
-
-{#        {% if feedback.customer.user == request.user %}#}
-{#            <a href="{% url 'feedback-update' feedback.id %}">Edit</a>#}
-{#            <a href="{% url 'feedback-delete' feedback.id %}">Delete</a>#}
-{#        {% endif %}#}
-              </div>
-          <div class="feedback-footer">
-            <b>Date of trip:</b> {{ feedback.date_last_edit.date }}
           </div>
-          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="row justify-content-center px-5 py-2">
+        <div class="col-lg-10">
+          <p>There are no feedbacks currently.</p>
+        </div>
       </div>
-      </div>
-    {% endfor %}
-
-  {% else %}
-    <p>There are no feedbacks currently.</p>
-  {% endif %}
-
-{#          <a href="{% url 'feedback-create' %}">Create feedback</a>#}
+    {% endif %}
   </div>
 {% endblock %}
 
-  {% block extra_button %}
-      <div class="d-grid gap-2 col-5 mx-auto pb-5 pt-4">
-              <a class="btn btn-primary" href="{% url 'feedback-create' %}" role="button">Add feedback</a>
-            </div>
-    {% endblock %}
+{% block extra_button %}
+  <div class="d-grid gap-2 col-5 mx-auto pb-5 pt-4">
+    <a class="btn btn-primary" href="{% url 'feedback-create' %}" role="button">Add feedback</a>
+  </div>
+{% endblock %}

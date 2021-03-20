@@ -1,4 +1,5 @@
 import os
+from django import forms
 
 from .helper_functions import resize_image
 from PIL import Image
@@ -10,7 +11,7 @@ from django.views import generic
 # for user creation form
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet, TripForm
+from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet, TripForm, FeedbackCreateForm, FeedbackUpdateForm
 from catalog.models import User
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
@@ -149,13 +150,15 @@ def customer_profile_view(request):
 class FeedbackListView(generic.ListView):
     model = Feedback
     ordering = ['-date_last_edit']
-    paginate_by = 1
+    paginate_by = 5
 
 
 class FeedbackCreate(generic.CreateView):
     model = Feedback
-    fields = ['content']
     success_url = reverse_lazy('feedbacks')
+    # normally no need for this, but i need to specify a widget for date of trip field
+    # so i get a datepicker in form
+    form_class = FeedbackCreateForm
 
     # this is to set the customer field to currently logged in user automatically
     def form_valid(self, form):
@@ -165,8 +168,10 @@ class FeedbackCreate(generic.CreateView):
 
 class FeedbackUpdate(generic.UpdateView):
     model = Feedback
-    fields = ['content']
     success_url = reverse_lazy('feedbacks')
+    # normally no need for this, but i need to specify a widget for date of trip field
+    # so i get a datepicker in form
+    form_class = FeedbackUpdateForm
 
 
 class FeedbackDelete(generic.DeleteView):
