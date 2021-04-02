@@ -23,7 +23,7 @@
       <div class="row align-items-center">
         <div class="col-lg-2 col-md-2 d-none d-md-block ">
           <div class="container-header-logo">
-            <img class="img-fluid" src={% static 'img/logo.jpg' %} alt="">
+            <img class="img-fluid" src="{% static 'img/logo.jpg' %}" alt="Logo">
           </div>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-12 d-none d-sm-block ">
@@ -63,13 +63,15 @@
   {#            <a class="nav-link active" href="{% url 'accommodations' %}">Accommodation</a>#}
   {#          </li>#}
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuExpeditions" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Expeditions
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuExpeditions">
                 <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#7-day">7-day</a></li>
                 <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#5-day">5-day</a></li>
                 <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#3-day">3-day</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#create-own">Create own</a></li>
               </ul>
             </li>
             <li class="nav-item">
@@ -78,8 +80,17 @@
             <li class="nav-item">
               <a class="nav-link active" href="{% url 'feedbacks' %}">Feedbacks</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="{% url 'about-us' %}">About Us</a>
+{#            <li class="nav-item">#}
+{#              <a class="nav-link active" href="{% url 'about-us' %}">About Us</a>#}
+{#            </li>#}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuAboutUs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                About Us
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuAboutUs">
+                <li><a class="dropdown-item" href="{% url 'about-us' %}#about-us">About Us</a></li>
+                <li><a class="dropdown-item" href="{% url 'about-us' %}#contacts">Contacts</a></li>
+              </ul>
             </li>
           </ul>
 

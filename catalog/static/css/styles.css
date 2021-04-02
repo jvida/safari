@@ -122,12 +122,40 @@ a[href^="mailto:"], a[href^="tel:"] {
     text-align: end;
 }
 
-#feedback-buttons > a {
+#feedback-buttons > a, #my-expeditions-buttons > a {
     text-decoration: none;
 }
 
-#feedback-buttons > a > img {
+#feedback-buttons > a > img, #my-expeditions-buttons > a > img {
     margin-left: .75rem;
     margin-bottom: 1.3rem;
+    margin-top: .5rem;
 }
 /* Feedbacks END */
+
+/* Profile Start*/
+/*.profile-img {*/
+/*    !*max-width: 4rem;*!*/
+/*}*/
+
+/*#change-password {*/
+/*    display:flex;*/
+/*    align-items:flex-end;*/
+/*    flex-direction: column;*/
+/*}*/
+/* Profile END*/
+
+/* So jumping to a specific part of a page considers a sticky navbar */
+.jump-href:before {
+  display: block;
+  height: 56px;   /* equal to the header height */
+  margin-top: -56px;  /* negative margin equal to the header height */
+  visibility: hidden;
+  content: "";
+}
+
+/* My expeditions START */
+#my-expeditions-buttons {
+    float: right;
+}
+/* My expeditions END */

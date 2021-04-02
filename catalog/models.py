@@ -32,6 +32,10 @@ class Feedback(models.Model):
     date_last_edit = models.DateTimeField(auto_now=True)
     date_of_trip = models.DateField(blank=False)
 
+    def __str__(self):
+        """String for representing the Model object."""
+        return f'{self.customer}, {self.date_created.date()}'
+
 
 class Park(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular park.')

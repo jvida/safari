@@ -1,4 +1,5 @@
 import re
+from datetime import date
 from django import forms
 from django.core.files import File
 
@@ -24,6 +25,16 @@ def img_validation(picture, mb_limit):
         if picture:
             if picture.size > mb_limit * 1024 * 1024:
                 errors['picture'] = _(f'Image file too large ( > {mb_limit}mb )')
+    return errors
+
+
+def date_validation(date_of_trip, oldest_allowed, newest_allowed):
+    errors = {}
+
+    if date_of_trip < oldest_allowed:
+        errors['date_of_trip'] = _('ERROR too old')
+    elif date_of_trip > newest_allowed:
+        errors['date_of_trip'] = _('ERROR too young')
     return errors
 
 
@@ -70,6 +81,7 @@ class EditCustomerProfile(forms.ModelForm):
     def clean(self):
         picture = self.cleaned_data["picture"]
         errors = img_validation(picture, mb_limit=1)
+
         if errors:
             raise ValidationError(errors)
 
@@ -90,10 +102,22 @@ class EditUserProfile(forms.ModelForm):
         fields = ['username', 'first_name', 'last_name']
 
     def clean(self):
+        username = self.cleaned_data['username']
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']
 
-        errors = name_validation(first_name, last_name)
+        errors = {}
+
+        # validate only if name fields were modified
+        if first_name != self.instance.first_name or last_name != self.instance.last_name:
+            errors = name_validation(first_name, last_name)
+
+        # validate only if username field was modified
+        if username != self.instance.username:
+            # validation of username - checking whether already exists in DB or nor
+            if User.objects.filter(username=username).exists():
+                errors['username'] = _('The username is already in use. Please use a different username.')
+
         if errors:
             raise ValidationError(errors)
 
@@ -121,7 +145,6 @@ class BaseTripFormSet(forms.BaseModelFormSet):
             if park:
                 if park in parks:
                     form.add_error('park', 'Trips can\'t have same parks.')
-                    # raise ValidationError(_('Trips can\'t have same parks.'))
                 parks.append(park)
 
 
@@ -156,7 +179,7 @@ class TripForm(forms.ModelForm):
         return True
 
 
-class FeedbackCreateForm(forms.ModelForm):
+class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
         fields = ["content", "date_of_trip"]
@@ -164,11 +187,12 @@ class FeedbackCreateForm(forms.ModelForm):
             'date_of_trip': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
+    def clean(self):
+        date_of_trip = self.cleaned_data['date_of_trip']
+        oldest_allowed = date(year=2017, month=1, day=1)
+        newest_allowed = date.today()
 
-class FeedbackUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Feedback
-        fields = ["content", "date_of_trip"]
-        widgets = {
-            'date_of_trip': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-        }
+        errors = date_validation(date_of_trip, oldest_allowed=oldest_allowed, newest_allowed=newest_allowed)
+
+        if errors:
+            raise ValidationError(errors)

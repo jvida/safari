@@ -1,4 +1,5 @@
 import os
+from django.db.models import Sum
 from django import forms
 
 from .helper_functions import resize_image
@@ -11,7 +12,7 @@ from django.views import generic
 # for user creation form
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet, TripForm, FeedbackCreateForm, FeedbackUpdateForm
+from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet, TripForm, FeedbackForm
 from catalog.models import User
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
@@ -55,8 +56,14 @@ class ExpeditionListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ExpeditionListView, self).get_context_data(**kwargs)
-        context['trips'] = Trip.objects.all()
+        # context['trips'] = Trip.objects.all()
+        expeditions = kwargs.pop('object_list', self.object_list)
+        totals = []
+        for exp in expeditions:
+            total_days = (Trip.objects.filter(expedition=exp)).aggregate(Sum('days'))
+            totals.append(total_days['days__sum'])
         context['query'] = self.kwargs['query']
+        context['totals'] = totals
         return context
 
 
@@ -158,7 +165,7 @@ class FeedbackCreate(generic.CreateView):
     success_url = reverse_lazy('feedbacks')
     # normally no need for this, but i need to specify a widget for date of trip field
     # so i get a datepicker in form
-    form_class = FeedbackCreateForm
+    form_class = FeedbackForm
 
     # this is to set the customer field to currently logged in user automatically
     def form_valid(self, form):
@@ -171,7 +178,7 @@ class FeedbackUpdate(generic.UpdateView):
     success_url = reverse_lazy('feedbacks')
     # normally no need for this, but i need to specify a widget for date of trip field
     # so i get a datepicker in form
-    form_class = FeedbackUpdateForm
+    form_class = FeedbackForm
 
 
 class FeedbackDelete(generic.DeleteView):
