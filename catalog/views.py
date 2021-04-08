@@ -294,6 +294,9 @@ def edit_my_expedition(request, pk):
             # process the data in form.cleaned_data as required
 
             expedition_instance.number_of_people = expedition_form.cleaned_data['number_of_people']
+            expedition_instance.message_for_us = expedition_form.cleaned_data['message_for_us']
+            expedition_instance.date_from = expedition_form.cleaned_data['date_from']
+            expedition_instance.date_to = expedition_form.cleaned_data['date_to']
             expedition_instance.trips.clear()
 
             trips = trip_formset.save(

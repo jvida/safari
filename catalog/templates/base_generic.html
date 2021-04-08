@@ -45,7 +45,9 @@
     <div id="content-wrap"> {# these two #}
       <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-company-red">
         <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">
+          <img class="rounded-circle" src="{% static 'img/logo-big.jpg' %}" alt="Navbar" width="40" height="40">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -88,8 +90,8 @@
                 About Us
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuAboutUs">
-                <li><a class="dropdown-item" href="{% url 'about-us' %}#about-us">About Us</a></li>
-                <li><a class="dropdown-item" href="{% url 'about-us' %}#contacts">Contacts</a></li>
+                <li><a class="dropdown-item" href="{% url 'about-us' %}#about-us-tag">About Us</a></li>
+                <li><a class="dropdown-item" href="{% url 'about-us' %}#contacts-tag">Contacts</a></li>
               </ul>
             </li>
           </ul>
@@ -128,7 +130,7 @@
       </nav>
 
       <div class="container-header-image">
-        <img src="{% static 'img/skuska5.jpg' %}" class="img-fluid" alt="...">
+        <img src="{% static 'img/title-img.jpg' %}" class="img-fluid" alt="...">
         <div class="container">
           <div class="row">
             <div class="col-sm-12">
@@ -175,7 +177,7 @@
     </div>
     <footer class="py-4" style="background-color: black" id="footer">
       <div class="container">
-        <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2020</p>
+        <p class="m-0 text-center text-white small">Copyright &copy; Wilderness MANIAC SAFARIS 2021</p>
       </div>
     </footer>
   </div>

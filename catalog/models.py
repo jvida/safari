@@ -86,12 +86,13 @@ class Trip(models.Model):
 
 
 class DailyPlan(models.Model):
-    name = models.CharField(max_length=150, help_text='Enter a short description for this day. (e.g. Day 1: Arusha)')
+    lable = models.CharField(max_length=150, help_text='Enter an identification for this day. (e.g. 5-day: Day 1)')
+    title = models.CharField(max_length=150, help_text='Enter a short description for this day. (e.g. Day 1: Arusha)')
     description = models.TextField(max_length=2000, help_text='Enter a programme for this day.')
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.name
+        return self.lable
 
 
 class Itinerary(models.Model):
@@ -112,11 +113,12 @@ class Expedition(models.Model):
                                                                                                        'trips.')
     trips = models.ManyToManyField(Trip, help_text='Select trips you wish to visit.')
     CHOICES = [(i, i) for i in range(1, 10)]
-    number_of_people = models.IntegerField(choices=CHOICES, blank=True, null=True, help_text='Select how many people.'
-                                                                                             ' (Can be changed later)')
+    number_of_people = models.IntegerField(choices=CHOICES, blank=True, null=True, help_text='Select how many people.')
     message_for_us = models.TextField(max_length=2000, blank=True, help_text='Enter a message for us, if u want.')
     recommended = models.BooleanField(default=False, help_text='Is this a recommended trip by agency?')
     itinerary = models.ForeignKey('Itinerary', on_delete=models.CASCADE, blank=True, null=True)
+    date_from = models.DateField(blank=True, null=True, help_text='Select a time window in which You wish to join us for an advanture.')
+    date_to = models.DateField(blank=True, null=True)
 
     # def display_trips(self):
     #     """Create a string for the Trip. This is required to display trips in Admin."""

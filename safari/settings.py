@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'catalog.apps.CatalogConfig',
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
+    'django_bleach',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,5 @@ MEDIA_URL = "/media/"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a']

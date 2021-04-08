@@ -3,6 +3,7 @@
 
 {% load static %}
 {% load catalog_extras %}
+{% load bleach_tags %}
 
 {% block content %}
   <div class="px-4 pt-4">
@@ -22,7 +23,7 @@
             <div class="col-lg-7">
               <div class="p-5">
                 <h2 class="display-4">{{ expedition.itinerary }} safari...</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                <p>{{ expedition.itinerary.description|bleach|linebreaks }}</p>
               </div>
             </div>
             <div class="col-lg-5 ">
@@ -47,12 +48,12 @@
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
                           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
-                            {{ plan }}
+                            {{ plan.title }}
                           </button>
                         </h2>
                         <div id="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="accordion-collapse collapse show" aria-labelledby="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" data-bs-parent="#accordion_{{ forloop.parentloop.counter }}">
                           <div class="accordion-body">
-                            {{ plan.description }}
+                            {{ plan.description|linebreaks }}
                           </div>
                         </div>
                       </div>
@@ -60,12 +61,12 @@
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
-                            {{ plan }}
+                            {{ plan.title }}
                           </button>
                         </h2>
                         <div id="collapse_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="accordion_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" data-bs-parent="#accordion_{{ forloop.parentloop.counter }}">
                           <div class="accordion-body">
-                            {{ plan.description }}
+                            {{ plan.description|linebreaks }}
                           </div>
                         </div>
                       </div>
@@ -92,7 +93,8 @@
                 <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
               </a>
                         </span>
-                        <h1>May 12, 1991 - May 12, 2020</h1>
+
+                        <h1>{{ expedition.date_from }} - {{ expedition.date_to }}</h1>
 
                       </div>
 
@@ -123,8 +125,9 @@
       <td>{{ totals|lookup:forloop.counter }}</td>
   </tfoot>
 </table>
-            Number of people: 7
-            {{ totals }}
+            Number of people: {{ expedition.number_of_people }} <br>
+            {{ totals }} <br>
+            {{ expedition.message_for_us }}
             </div>
           </div>
         {% endif %}

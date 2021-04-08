@@ -1,12 +1,12 @@
 import re
-from datetime import date
+from datetime import date, timedelta
 from django import forms
 from django.core.files import File
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
-from catalog.models import User, Customer, Expedition, Trip, Feedback
+from catalog.models import User, Customer, Expedition, Trip, Feedback, Park
 
 
 def name_validation(first_name, last_name):
@@ -20,7 +20,7 @@ def name_validation(first_name, last_name):
 
 def img_validation(picture, mb_limit):
     errors = {}
-    # if it's str, it's loaded frim DB => not updated picture => no need to check it
+    # if it's str, it's loaded from DB => not updated picture => no need to check it
     if not isinstance(picture, str):
         if picture:
             if picture.size > mb_limit * 1024 * 1024:
@@ -28,13 +28,9 @@ def img_validation(picture, mb_limit):
     return errors
 
 
-def date_validation(date_of_trip, oldest_allowed, newest_allowed):
-    errors = {}
-
-    if date_of_trip < oldest_allowed:
-        errors['date_of_trip'] = _('ERROR too old')
-    elif date_of_trip > newest_allowed:
-        errors['date_of_trip'] = _('ERROR too young')
+def date_validation(errors, given_date, newest_allowed, oldest_allowed, error_field, error_msg):
+    if given_date < newest_allowed or given_date > oldest_allowed:
+        errors[error_field] = _(error_msg)
     return errors
 
 
@@ -141,7 +137,7 @@ class BaseTripFormSet(forms.BaseModelFormSet):
         for form in self.forms:
             if self.can_delete and self._should_delete_form(form):
                 continue
-            park = form.cleaned_data['park']    # TODO check if park exists
+            park = form.cleaned_data.get('park')    # get method returns None if it doesnt exist
             if park:
                 if park in parks:
                     form.add_error('park', 'Trips can\'t have same parks.')
@@ -149,15 +145,54 @@ class BaseTripFormSet(forms.BaseModelFormSet):
 
 
 class ExpeditionForm(forms.ModelForm):
+    # date_from = forms.DateField(required=True)
+    # date_to = forms.DateField(required=True)
+
     class Meta:
         model = Expedition
-        fields = ['number_of_people', 'message_for_us']
+        fields = ['date_from', 'date_to', 'number_of_people', 'message_for_us']
+        widgets = {
+            'date_from': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'date_to': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
 
-    def clean_number_of_people(self):
+    def clean(self):
+        date_from = self.cleaned_data['date_from']
+        date_to = self.cleaned_data['date_to']
         number_of_people = self.cleaned_data['number_of_people']
+
+        errors = {}
+
+        if not date_from:
+            errors['date_from'] = _('Enter date.')
+        else:
+            newest_allowed = date.today() + timedelta(days=1)
+            oldest_allowed = date.today() + timedelta(days=730)
+            error_msg = 'Invalid date. Soonest allowed is tomorrow, latest allowed is today in 2 years.'
+            errors = date_validation(errors, date_from, newest_allowed=newest_allowed, oldest_allowed=oldest_allowed,
+                                     error_field='date_from', error_msg=error_msg)
+
+        if not date_to:
+            errors['date_to'] = _('Enter date.')
+        else:
+            newest_allowed = date.today() + timedelta(days=1+3)
+            oldest_allowed = date.today() + timedelta(days=730)
+            error_msg = 'Invalid date. Soonest allowed is tomorrow+3days (in case of a 2-day safari),' \
+                        ' latest allowed is today in 2 years.'
+            errors = date_validation(errors, date_to, newest_allowed=newest_allowed, oldest_allowed=oldest_allowed,
+                                     error_field='date_to', error_msg=error_msg)
+
+        if not ('date_from' in errors) and not ('date_to' in errors):
+            if date_from > date_to:
+                errors['date_from'] = _('Invalid date. "Date from" can\'t be later than "Date to"')
+            elif (date_to - date_from).days < 3:
+                errors['date_to'] = _('Invalid date. Minimum 3 days (in case of a 2-day safari)')
+
         if not number_of_people:
-            raise ValidationError(_('Enter number of people.'))
-        return number_of_people
+            errors['number_of_people'] = _('Enter number of people.')
+
+        if errors:
+            raise ValidationError(errors)
 
     # toto by som pouzil, aby form ukazal warning, ze field musi byt filled
     # ale bohuzial u tripformsetu je problem, ze modelfactory ten input html negeneruje s required
@@ -189,10 +224,13 @@ class FeedbackForm(forms.ModelForm):
 
     def clean(self):
         date_of_trip = self.cleaned_data['date_of_trip']
-        oldest_allowed = date(year=2017, month=1, day=1)
-        newest_allowed = date.today()
+        newest_allowed = date.today() - timedelta(days=365*3)
+        oldest_allowed = date.today()
 
-        errors = date_validation(date_of_trip, oldest_allowed=oldest_allowed, newest_allowed=newest_allowed)
+        errors = {}
+        error_msg = 'Invalid date. Latest allowed is today, soonest allowed is 3 years ago.'
+        errors = date_validation(errors=errors, given_date=date_of_trip, newest_allowed=newest_allowed,
+                                 oldest_allowed=oldest_allowed, error_field='date_of_trip', error_msg=error_msg)
 
         if errors:
             raise ValidationError(errors)

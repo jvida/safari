@@ -6,8 +6,8 @@
 
 /* so header image has max width*/
 .container-header-image, #container-header-title {
-    max-width: 1400px;
-    margin: 0 auto;
+    /*max-width: 1400px;*/
+    /*margin: 0 auto;*/
 }
 
 /* so navbar has max width*/
@@ -148,8 +148,8 @@ a[href^="mailto:"], a[href^="tel:"] {
 /* So jumping to a specific part of a page considers a sticky navbar */
 .jump-href:before {
   display: block;
-  height: 56px;   /* equal to the header height */
-  margin-top: -56px;  /* negative margin equal to the header height */
+  height: 66px;   /* equal to the header height */
+  margin-top: -66px;  /* negative margin equal to the header height */
   visibility: hidden;
   content: "";
 }
@@ -159,3 +159,9 @@ a[href^="mailto:"], a[href^="tel:"] {
     float: right;
 }
 /* My expeditions END */
+
+/* About us START */
+#contacts > p > b > a {
+    text-decoration: none;
+}
+/* About us END */

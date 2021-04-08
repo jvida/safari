@@ -10,7 +10,7 @@
 
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-12">
+      <div class="col-lg-10">
         <div class="p-5">
           <form id="form-container" method="post">
             {% csrf_token %}
@@ -23,7 +23,17 @@
               </div>
             {% endfor %}
             <div class="crispy-form-expedition">
-              {{ expedition_form|crispy }}
+{#              {{ expedition_form|crispy }}#}
+              <div class="row">
+                <div class="col-md-6 mb-0">
+                  {{ expedition_form.date_from|as_crispy_field }}
+                </div>
+                <div class="col-md-6 mb-0">
+                  {{ expedition_form.date_to|as_crispy_field }}
+                </div>
+              </div>
+              {{ expedition_form.number_of_people|as_crispy_field }}
+              {{ expedition_form.message_for_us|as_crispy_field }}
             </div>
             <div class="d-grid gap-2 col-5 mx-auto py-5">
               <button class="btn btn-primary" type="submit">Submit</button>
