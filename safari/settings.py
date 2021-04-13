@@ -28,6 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '***REMOVED***')
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['drozdo.pythonanywhere.com']
 
 
 # Application definition
@@ -126,6 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'catalog/static')
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
@@ -133,7 +135,7 @@ LOGIN_REDIRECT_URL = '/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = "/media/"
+MEDIA_URL = '/media/'
 
 # for testing purposes
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
