@@ -342,6 +342,7 @@ def gallery(request):
     context = {}
     # files = os.listdir(os.path.join(settings.STATIC_ROOT, "img/gallery/"))
     gallery_images = os.listdir('catalog/static/img/gallery/')   # TODO toto mozno este nejako upravit rozumnejsie
+    #gallery_images = os.listdir('/home/drozdo/safari/catalog/static/img/gallery/')
     context['images'] = gallery_images
 
     # Render the HTML template catalog/gallery.html with the data in the context variable
