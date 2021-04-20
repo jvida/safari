@@ -53,7 +53,7 @@ class Park(models.Model):
     #     help_text='Ideal months for visit.'
     # )
 
-    description = models.TextField(max_length=3500, help_text='Enter a description of the park.')
+    description = models.TextField(max_length=5000, help_text='Enter a description of the park.')
 
     def __str__(self):
         """String for representing the Model object."""
