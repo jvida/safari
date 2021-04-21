@@ -64,9 +64,9 @@ class Accommodation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                           help_text='Unique ID for this particular accommodation.')
     type = models.CharField(max_length=150, help_text='Insert an accommodation type.')
-    description = models.TextField(max_length=2000, help_text='Enter a description of the accommodation type.')
-    price_from = models.DecimalField(max_digits=10, decimal_places=2, help_text="Insert price from.")
-    price_to = models.DecimalField(max_digits=10, decimal_places=2, help_text="Insert price to.")
+    description = models.TextField(max_length=2000, help_text='Enter a description of the accommodation type.', blank=True)
+    price_from = models.DecimalField(max_digits=10, decimal_places=2, help_text="Insert price from.", blank=True, null=True)
+    price_to = models.DecimalField(max_digits=10, decimal_places=2, help_text="Insert price to.", blank=True, null=True)
 
     def __str__(self):
         """String for representing the Model object."""
