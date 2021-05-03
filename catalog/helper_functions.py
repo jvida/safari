@@ -1,6 +1,20 @@
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
+from catalog.models import Park
+from catalog.forms import TripForm, SingleTripForm
+
+
+def expedition_helper(exp_type):
+    if exp_type == "safari":
+        num_parks = Park.objects.filter(safari=True).count()
+        trip_form = TripForm
+        single_trip = False
+    else:
+        num_parks = 1
+        trip_form = SingleTripForm
+        single_trip = True
+    return num_parks, trip_form, single_trip
 
 
 def resize_image(image: Image, length: int, content_file: bool):

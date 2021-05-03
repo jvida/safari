@@ -2,7 +2,7 @@ import os
 from django.db.models import Sum
 from django import forms
 
-from .helper_functions import resize_image
+from .helper_functions import resize_image, expedition_helper
 from PIL import Image
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
@@ -12,7 +12,8 @@ from django.views import generic
 # for user creation form
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet, TripForm, FeedbackForm
+from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet,\
+    TripForm, FeedbackForm, SingleTripForm
 from catalog.models import User
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
@@ -33,14 +34,11 @@ def index(request):
 class ParkListView(generic.ListView):
     model = Park
 
-    def get_context_data(self, **kwargs):
-        context = super(ParkListView, self).get_context_data(**kwargs)
-        context['accommodations'] = Accommodation.objects.all()
-        return context
-
-
-# class AccommodationListView(generic.ListView):
-#     model = Accommodation
+    # I don't need this anymore, since we don't use Accommodation model for listing.
+    # def get_context_data(self, **kwargs):
+    #     context = super(ParkListView, self).get_context_data(**kwargs)
+    #     context['accommodations'] = Accommodation.objects.all()
+    #     return context
 
 
 class ExpeditionListView(generic.ListView):
@@ -56,12 +54,15 @@ class ExpeditionListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ExpeditionListView, self).get_context_data(**kwargs)
-        # context['trips'] = Trip.objects.all()
+
         expeditions = kwargs.pop('object_list', self.object_list)
         totals = []
         for exp in expeditions:
             total_days = (Trip.objects.filter(expedition=exp)).aggregate(Sum('days'))
             totals.append(total_days['days__sum'])
+
+        context['safaris'] = Expedition.objects.filter(recommended=True).filter(single_trip=False).exists()
+        context['single_trips'] = Expedition.objects.filter(recommended=True).filter(single_trip=True).exists()
         context['query'] = self.kwargs['query']
         context['totals'] = totals
         return context
@@ -186,9 +187,10 @@ class FeedbackDelete(generic.DeleteView):
     success_url = reverse_lazy('feedbacks')
 
 
-def create_new_expedition(request):
-    num_parks = Park.objects.all().count()
-    TripFormSet = modelformset_factory(Trip, form=TripForm, formset=BaseTripFormSet,
+def create_new_expedition(request, exp_type):
+    print("add_recommended_expedition", exp_type)
+    num_parks, trip_form, single_trip = expedition_helper(exp_type)
+    TripFormSet = modelformset_factory(Trip, form=trip_form, formset=BaseTripFormSet,
                                        max_num=num_parks, min_num=1, extra=0, validate_min=True)
     # If this is a POST request then process the Form data
     if request.method == 'POST':
@@ -212,6 +214,7 @@ def create_new_expedition(request):
                 expedition.trips.add(trip)
 
             expedition.customer = Customer.objects.get(user=request.user)
+            expedition.single_trip = single_trip
             expedition.save()
             # redirect to a new URL:
             return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
@@ -230,10 +233,10 @@ def create_new_expedition(request):
     return render(request, 'catalog/create_expedition.html', context)
 
 
-def add_recommended_expedition(request, pk):
-    print("add_recommended_expedition")
-    num_parks = Park.objects.all().count()
-    TripFormSet = modelformset_factory(Trip, form=TripForm, formset=BaseTripFormSet,
+def add_recommended_expedition(request, pk, exp_type):
+    print("add_recommended_expedition", exp_type)
+    num_parks, trip_form, single_trip = expedition_helper(exp_type)
+    TripFormSet = modelformset_factory(Trip, form=trip_form, formset=BaseTripFormSet,
                                        max_num=num_parks, min_num=1, extra=0, validate_min=True)
     # If this is a POST request then process the Form data
     if request.method == 'POST':
@@ -259,6 +262,7 @@ def add_recommended_expedition(request, pk):
                 expedition.trips.add(trip)
 
             expedition.customer = Customer.objects.get(user=request.user)
+            expedition.single_trip = single_trip
             expedition.save()
             # redirect to a new URL:
             return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
@@ -274,10 +278,10 @@ def add_recommended_expedition(request, pk):
     return render(request, 'catalog/create_expedition.html', context)
 
 
-def edit_my_expedition(request, pk):
-    print("edit_my_expedition")
-    num_parks = Park.objects.all().count()
-    TripFormSet = modelformset_factory(Trip, form=TripForm, formset=BaseTripFormSet,
+def edit_my_expedition(request, pk, exp_type):
+    print("edit_my_expedition", exp_type)
+    num_parks, trip_form, single_trip = expedition_helper(exp_type)
+    TripFormSet = modelformset_factory(Trip, form=trip_form, formset=BaseTripFormSet,
                                        max_num=num_parks, min_num=1, extra=0, validate_min=True)
 
     expedition_instance = get_object_or_404(Expedition, pk=pk)
