@@ -1,6 +1,8 @@
 import os
 from django.db.models import Sum
 from django import forms
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .helper_functions import resize_image, expedition_helper
 from PIL import Image
@@ -44,6 +46,12 @@ class ParkListView(generic.ListView):
 class ExpeditionListView(generic.ListView):
     model = Expedition
     template_name = 'catalog/expedition_list.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.kwargs['query'] == "my_expeditions" and not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('login'))
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         if self.kwargs['query'] == "recommended":
@@ -106,6 +114,7 @@ def create_new_user(request):
     return render(request, 'catalog/sign_up.html', context)
 
 
+@login_required
 def edit_user_profile(request):
     # If this is a POST request then process the Form data
     if request.method == 'POST':
@@ -146,6 +155,7 @@ def edit_user_profile(request):
     return render(request, 'catalog/profile_edit.html', context)
 
 
+@login_required
 def customer_profile_view(request):
     customer = Customer.objects.get(user=request.user)
     context = {
@@ -161,7 +171,7 @@ class FeedbackListView(generic.ListView):
     paginate_by = 5
 
 
-class FeedbackCreate(generic.CreateView):
+class FeedbackCreate(LoginRequiredMixin, generic.CreateView):
     model = Feedback
     success_url = reverse_lazy('feedbacks')
     # normally no need for this, but i need to specify a widget for date of trip field
@@ -174,7 +184,7 @@ class FeedbackCreate(generic.CreateView):
         return super().form_valid(form)
 
 
-class FeedbackUpdate(generic.UpdateView):
+class FeedbackUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Feedback
     success_url = reverse_lazy('feedbacks')
     # normally no need for this, but i need to specify a widget for date of trip field
@@ -182,11 +192,12 @@ class FeedbackUpdate(generic.UpdateView):
     form_class = FeedbackForm
 
 
-class FeedbackDelete(generic.DeleteView):
+class FeedbackDelete(LoginRequiredMixin, generic.DeleteView):
     model = Feedback
     success_url = reverse_lazy('feedbacks')
 
 
+@login_required
 def create_new_expedition(request, exp_type):
     print("add_recommended_expedition", exp_type)
     num_parks, trip_form, single_trip = expedition_helper(exp_type)
@@ -233,6 +244,7 @@ def create_new_expedition(request, exp_type):
     return render(request, 'catalog/create_expedition.html', context)
 
 
+@login_required
 def add_recommended_expedition(request, pk, exp_type):
     print("add_recommended_expedition", exp_type)
     num_parks, trip_form, single_trip = expedition_helper(exp_type)
@@ -278,6 +290,7 @@ def add_recommended_expedition(request, pk, exp_type):
     return render(request, 'catalog/create_expedition.html', context)
 
 
+@login_required
 def edit_my_expedition(request, pk, exp_type):
     print("edit_my_expedition", exp_type)
     num_parks, trip_form, single_trip = expedition_helper(exp_type)
@@ -328,7 +341,7 @@ def edit_my_expedition(request, pk, exp_type):
     return render(request, 'catalog/create_expedition.html', context)
 
 
-class ExpeditionDelete(generic.DeleteView):
+class ExpeditionDelete(LoginRequiredMixin, generic.DeleteView):
     model = Expedition
     success_url = reverse_lazy('expeditions', kwargs={'query': "my_expeditions"})
 

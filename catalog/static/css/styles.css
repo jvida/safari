@@ -167,3 +167,7 @@ a[href^="mailto:"], a[href^="tel:"] {
     text-decoration: none;
 }
 /* About us END */
+
+.list-group-item {
+    background: #fcfbfb;
+}

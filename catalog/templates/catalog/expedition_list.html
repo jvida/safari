@@ -89,14 +89,21 @@
 
 
         {% elif query == "my_expeditions"%}
+
+
+
           <div class="row justify-content-center p-5" id="skuska">
                       <div class="px-3 pb-3">
                         <span id="my-expeditions-buttons">
+                            {% if not expedition.single_trip %}
                           <a href="{{ expedition.get_absolute_url_my }}">
+                           {% else %}
+                              <a href="{{ expedition.get_absolute_url_my_single }}">
+                                  {% endif %}
                 <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
               </a>
               <a href="{% url 'expedition-delete'  pk=expedition.id %}">
-                <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
+                <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Delete" width="20" height="20">
               </a>
                         </span>
 
@@ -105,36 +112,45 @@
                       </div>
 
 
-            <div class="col-12">
-              <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Park</th>
-      <th scope="col">Accommodation</th>
-      <th scope="col">Days</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for trip in expedition.trips.all %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{ trip.park }}</td>
-      <td>{{ trip.accommodation }}</td>
-      <td>{{ trip.days }}</td>
-    </tr>
-    {% endfor %}
-  </tbody><tfoot>
-<th scope="row">Total days</th>
-      <td></td>
-      <td></td>
-      <td>{{ totals|lookup:forloop.counter }}</td>
-  </tfoot>
-</table>
-            Number of people: {{ expedition.number_of_people }} <br>
-            {{ totals }} <br>
-            {{ expedition.message_for_us }}
-            </div>
+<div class="col-7">
+                      <ol class="list-group list-group-numbered">
+{% for trip in expedition.trips.all %}
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">{{ trip.park }}</div>
+        {{ trip.accommodation }}
+    </div>
+    <span class="badge bg-primary rounded-pill">Days: {{ trip.days }}</span>
+  </li>
+                            {% endfor %}
+                      <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Total number of days</div>
+{#        {{ totals|lookup:forloop.counter }}#}
+    </div>
+    <span class="badge bg-primary rounded-pill">{{ totals|lookup:forloop.counter }}</span>
+  </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Number of people</div>
+{#        {{ expedition.number_of_people }}#}
+    </div>
+    <span class="badge bg-primary rounded-pill">{{ expedition.number_of_people }}</span>
+  </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Message for us</div>
+        {% if expedition.message_for_us %}
+        {{ expedition.message_for_us|bleach|linebreaks }}
+            {% else %}
+        <small class="text-muted">No message.</small>
+            {% endif %}
+    </div>
+{#    <span class="badge bg-primary rounded-pill">Days: {{ trip.days }}</span>#}
+  </li>
+</ol>
+</div>
+
           </div>
         {% endif %}
         <hr>
@@ -145,7 +161,7 @@
 
     <a class="jump-href" id="create-own"></a>
   {% if single_trips %}
-  <div class="btn-group dropup d-grid gap-2 col-5 mx-auto py-5" role="group">
+  <div class="btn-group d-grid gap-2 col-5 mx-auto py-5" role="group">
     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
       Create your own
     </button>
