@@ -171,3 +171,11 @@ a[href^="mailto:"], a[href^="tel:"] {
 .list-group-item {
     background: #fcfbfb;
 }
+
+#my-parks {
+    background: azure;
+}
+
+#my-rest {
+    background: aliceblue;
+}
