@@ -126,7 +126,7 @@ class Expedition(models.Model):
     number_of_people = models.IntegerField(choices=CHOICES, blank=True, null=True, help_text='Select how many people.')
     message_for_us = models.TextField(max_length=2000, blank=True, help_text='Enter a message for us, if u want.')
     recommended = models.BooleanField(default=False, help_text='Is this a recommended trip by agency?')
-    single_trip = models.BooleanField()
+    single_trip = models.BooleanField(null=True)
     description = models.TextField(max_length=2000, blank=True,
                                    help_text='Enter a short description for this expedition.')
     itinerary = models.ForeignKey('Itinerary', on_delete=models.CASCADE, blank=True, null=True)
