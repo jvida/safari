@@ -15,7 +15,7 @@
       {% for park in park_list %}
         <div class="container">
           <div class="row">
-            <div class="col-12 p-3 px-md-5">
+            <div class="col-12 p-3 px-lg-5">
               <div class="p-3">
                 <h3>{{ park }}</h3>
               </div>
@@ -43,38 +43,19 @@
       <h1>Accommodation options we offer</h1>
     </div>
 
-    {% if accommodations %}
-      {% for accommodation in accommodations %}
         <div class="container">
-          <div class="row">
-            <div class="col-sm-12 p-5">
-              <div class="p-3">
-                <h3>{{ accommodation.type }} Price: {{ accommodation.price_from }} - {{ accommodation.price_to }}</h3>
-              </div>
-              {% if forloop.counter|divisibleby:2 %}
-                <div class="container-offer-image-end float-end">
-              {% else %}
-                <div class="container-offer-image-start float-start">
-              {% endif %}
-                  <img src="{% static 'img/about-us-florid.jpg' %}" class="img-fluid rounded-circle" alt="" id="imgdpc">
-                </div>
-                {{ accommodation.description }}
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-            </div>
+        <div class="row">
+          <div class="col-sm-12 p-5">
+            <p>
+              During the whole trip there will be a professional chef ready to cook whatever he see in your eyes. In the beggining he would ask you wether you eat meat/fish or not. After obtaining the informations he needs he would prepare menu that would suit your needs.
+              Breakfast- pancakes/omelets, boiled eggs,  cheese, butter, bread, marmalede, coffe, tea, fruit
+              Lunch- rice/pasta, meat/vegeterian dish, vegetable, fruit
+              Dinner- rice/pasta, meat/vegeterian dish, vegetable, fruit
+            </p>
           </div>
         </div>
-{#        {% if forloop.counter != accommodations.count %}#}
+      </div>
           <hr>
-{#        {% endif %}#}
-      {% endfor %}
-    {% else %}
-      <p>There are no accommodation options currently.</p>
-    {% endif %}
   </section>
 
   <section>

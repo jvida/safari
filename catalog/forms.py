@@ -208,6 +208,25 @@ class TripForm(forms.ModelForm):
         model = Trip
         fields = ['park', 'accommodation', 'days']
 
+    def __init__(self, *args, **kwargs):
+        super(TripForm, self).__init__(*args, **kwargs)
+        self.fields['park'] = forms.ModelChoiceField(widget=forms.Select, queryset=Park.objects.filter(safari=True))
+
+    # This is for recommended expeditions. We need to set it, otherwise it wouldn't save for a user
+    # in case he wants the same trip (he didn't change anything, so save() would ignore this form without this override)
+    def has_changed(self):
+        return True
+
+
+class SingleTripForm(forms.ModelForm):
+    class Meta:
+        model = Trip
+        fields = ['park', 'accommodation', 'days']
+
+    def __init__(self, *args, **kwargs):
+        super(SingleTripForm, self).__init__(*args, **kwargs)
+        self.fields['park'] = forms.ModelChoiceField(widget=forms.Select, queryset=Park.objects.filter(safari=False))
+
     # This is for recommended expeditions. We need to set it, otherwise it wouldn't save for a user
     # in case he wants the same trip (he didn't change anything, so save() would ignore this form without this override)
     def has_changed(self):
