@@ -35,6 +35,7 @@ def index(request):
 
 class ParkListView(generic.ListView):
     model = Park
+    ordering = ['name']
 
     # I don't need this anymore, since we don't use Accommodation model for listing.
     # def get_context_data(self, **kwargs):

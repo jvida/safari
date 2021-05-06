@@ -7,7 +7,7 @@
 {% block content %}
 
   <section>
-    <div class="px-4 pt-4">
+    <div class="px-0 px-md-2 px-lg-5 pt-4">
       <h1>Parks we offer</h1>
     </div>
 
@@ -15,16 +15,16 @@
       {% for park in park_list %}
         <div class="container">
           <div class="row">
-            <div class="col-12 p-3 px-lg-5">
-              <div class="p-3">
-                <h3>{{ park }}</h3>
+            <div class="col-12 px-0 py-4 px-md-3 py-lg-4 px-lg-5">
+              <div class="pb-3">
+                <h2>{{ park }}</h2>
               </div>
               {% if forloop.counter|divisibleby:2 %}
                 <div class="container-offer-image-end float-end">
               {% else %}
                 <div class="container-offer-image-start float-start">
               {% endif %}
-                  <img src="{{ MEDIA_URL }}{{ park.picture }}" class="img-fluid rounded" alt="" id="imgdpc">
+                  <img src="{{ MEDIA_URL }}{{ park.picture }}" class="img-fluid" alt="" id="imgdpc">
                 </div>
                   {{ park.description|bleach }}
             </div>
@@ -39,13 +39,13 @@
 
 
   <section>
-    <div class="px-4 pt-4">
+    <div class="px-0 px-md-2 px-lg-5 pt-4">
       <h1>Accommodation options we offer</h1>
     </div>
 
         <div class="container">
         <div class="row">
-          <div class="col-sm-12 p-5">
+          <div class="col-12 px-0 py-4 px-md-3 py-lg-4 px-lg-5">
             <p>
               During the whole trip there will be a professional chef ready to cook whatever he see in your eyes. In the beggining he would ask you wether you eat meat/fish or not. After obtaining the informations he needs he would prepare menu that would suit your needs.
               Breakfast- pancakes/omelets, boiled eggs,  cheese, butter, bread, marmalede, coffe, tea, fruit
@@ -59,12 +59,12 @@
   </section>
 
   <section>
-    <div class="px-4 pt-4">
+    <div class="px-0 px-md-2 px-lg-5 pt-4">
       <h1>Food</h1>
     </div>
       <div class="container">
         <div class="row">
-          <div class="col-sm-12 p-5">
+          <div class="col-12 px-0 py-4 px-md-3 py-lg-4 px-lg-5">
             <p>
               During the whole trip there will be a professional chef ready to cook whatever he see in your eyes. In the beggining he would ask you wether you eat meat/fish or not. After obtaining the informations he needs he would prepare menu that would suit your needs.
               Breakfast- pancakes/omelets, boiled eggs,  cheese, butter, bread, marmalede, coffe, tea, fruit
