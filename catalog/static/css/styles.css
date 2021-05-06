@@ -52,7 +52,7 @@
     max-width: 50%;
     margin-right: 1rem;
     margin-bottom: 0.3rem;
-    margin-top: 0.4rem;
+    margin-top: 0.275rem;
 }
 
 /* so park image has max width*/
@@ -60,14 +60,31 @@
     max-width: 50%;
     margin-left: 1rem;
     margin-bottom: 0.3rem;
-    margin-top: 0.4rem;
+    margin-top: 0.275rem;
 }
 
-@media (max-width: 1200px) {
-     .container-offer-image-end {
+@media (max-width: 767px) {
+    .container-offer-image-start {
          width: 100%;
          max-width: 100%;
-     }
+    }
+
+    .container-offer-image-end {
+         width: 100%;
+         max-width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-offer-image-start {
+         width: 65%;
+         max-width: 65%;
+    }
+
+    .container-offer-image-end {
+         width: 65%;
+         max-width: 65%;
+    }
 }
 
 .container-offer-image-start #imgdpc {
