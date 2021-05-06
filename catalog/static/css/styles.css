@@ -65,13 +65,15 @@
 
 @media (max-width: 767px) {
     .container-offer-image-start {
-         width: 100%;
-         max-width: 100%;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom:  1.25rem;
     }
 
     .container-offer-image-end {
-         width: 100%;
-         max-width: 100%;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom:  1.25rem;
     }
 }
 
