@@ -47,7 +47,8 @@
 /*    right: 7rem;*/
 /*}*/
 
-/* so park image has max width*/
+/* park images */
+/*so park image has max width*/
 .container-offer-image-start {
     max-width: 50%;
     margin-right: 1rem;
@@ -63,6 +64,7 @@
     margin-top: 0.275rem;
 }
 
+/* different rules for small screens */
 @media (max-width: 767px) {
     .container-offer-image-start {
         width: 100%;
@@ -77,6 +79,7 @@
     }
 }
 
+/* different rules for big screens */
 @media (min-width: 1200px) {
     .container-offer-image-start {
          width: 65%;
@@ -89,7 +92,9 @@
     }
 }
 
-.container-offer-image-start #imgdpc {
+/* rounded corners */
+.container-offer-image-start #park-img {
+    /*border-top-left-radius: 45px;*/
     border-top-right-radius: 45px;
     border-bottom-left-radius: 45px;
     border-bottom-right-radius: 45px;
@@ -101,6 +106,7 @@
     border-bottom-left-radius: 45px;
     border-bottom-right-radius: 45px;
 }
+/*  */
 
 /* so footer is fixed at the bottom of a page */
 #page-container {
