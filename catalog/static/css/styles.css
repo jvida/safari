@@ -173,10 +173,20 @@ a[href^="mailto:"], a[href^="tel:"] {
     text-decoration: none;
 }
 
-#feedback-buttons > a > img, #my-expeditions-buttons > a > img {
+#feedback-buttons > a > img {
     margin-left: .75rem;
     margin-bottom: 1.3rem;
     margin-top: .5rem;
+}
+
+#my-expeditions-buttons > a > img {
+    /*margin-left: .75rem;*/
+    /*margin-bottom: 1.3rem;*/
+    /*margin-top: .5rem;*/
+
+    margin-left: .2rem;
+    /*margin-bottom: 1.3rem;*/
+    /*margin-top: .5rem;*/
 }
 /* Feedbacks END */
 
