@@ -174,9 +174,9 @@ a[href^="mailto:"], a[href^="tel:"] {
 }
 
 #feedback-buttons > a > img {
-    margin-left: .75rem;
-    margin-bottom: 1.3rem;
-    margin-top: .5rem;
+    margin-left: .3rem;
+    margin-bottom: .75rem;
+    /*margin-top: .5rem;*/
 }
 
 #my-expeditions-buttons > a > img {
