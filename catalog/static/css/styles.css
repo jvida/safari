@@ -184,8 +184,8 @@ a[href^="mailto:"], a[href^="tel:"] {
     /*margin-bottom: 1.3rem;*/
     /*margin-top: .5rem;*/
 
-    margin-left: .2rem;
-    /*margin-bottom: 1.3rem;*/
+    margin-left: .3rem;
+    margin-bottom: .1rem;
     /*margin-top: .5rem;*/
 }
 /* Feedbacks END */
@@ -214,6 +214,7 @@ a[href^="mailto:"], a[href^="tel:"] {
 /* My expeditions START */
 #my-expeditions-buttons {
     float: right;
+    margin-left: 1.5rem;
 }
 /* My expeditions END */
 
