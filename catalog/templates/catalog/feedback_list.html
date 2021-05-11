@@ -21,10 +21,13 @@
                       <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ feedback.customer.picture }}" alt="">
                     </div>
                     <span>
-                      <b>{{ feedback.customer.user.username }}</b><br>{{ feedback.date_created.date }}
-                      {% if feedback.date_created.date != feedback.date_last_edit.date or feedback.date_created.ctime != feedback.date_last_edit.ctime %}
-                        (<i>edited on {{ feedback.date_last_edit.date }}</i>)
-                      {% endif %}
+                      <b>{{ feedback.customer.user.username }}</b><br>
+                      <small class="text-muted">
+                        {{ feedback.date_created.date }}
+                        {% if feedback.date_created.date != feedback.date_last_edit.date or feedback.date_created.ctime != feedback.date_last_edit.ctime %}
+                          (<i>edited on {{ feedback.date_last_edit.date }}</i>)
+                        {% endif %}
+                      </small>
                     </span>
                   </div>
 
@@ -42,7 +45,7 @@
               </div>
 
               <div class="feedback-body py-3">
-                <p>"{{ feedback.content }}"</p>
+                <p>{{ feedback.content }}</p>
               </div>
 
               <div class="feedback-footer">

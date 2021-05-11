@@ -158,7 +158,7 @@ a[href^="mailto:"], a[href^="tel:"] {
 }
 
 .feedback-header-img {
-    max-width: 4rem;
+    max-width: 4.5rem;
 }
 
 #feedback-profile-area > span {
