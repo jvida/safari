@@ -178,7 +178,7 @@ a[href^="mailto:"], a[href^="tel:"] {
 }
 
 #feedback-buttons {
-    text-align: end;
+    margin-left: auto;
 }
 
 #feedback-buttons > a, #my-expeditions-buttons > a {
@@ -186,17 +186,14 @@ a[href^="mailto:"], a[href^="tel:"] {
 }
 
 #feedback-buttons > a > img {
-    margin-left: .3rem;
-    margin-bottom: .75rem;
-    /*margin-top: .5rem;*/
+    margin-left: .75rem;
+    margin-bottom: .3rem;
+    margin-top: -.3rem;
 }
 
 #my-expeditions-buttons > a > img {
-    margin-left: .75rem;
-
-    /*margin-left: .3rem;*/
-    margin-bottom: .3rem;
-    margin-top: -.3rem;
+    margin-left: .3rem;
+    margin-bottom: .1rem;
 }
 /* Feedbacks END */
 
@@ -223,9 +220,8 @@ a[href^="mailto:"], a[href^="tel:"] {
 
 /* My expeditions START */
 #my-expeditions-buttons {
-    /*float: right;*/
-    /*margin-left: 1.5rem;*/
-    margin-left: auto;
+    float: right;
+    margin-left: 1.5rem;
 }
 /* My expeditions END */
 

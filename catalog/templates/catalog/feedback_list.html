@@ -24,14 +24,17 @@
 
                     <div class="flex-container">
                       <b>{{ feedback.customer.user.username }}</b>
-                      <span id="my-expeditions-buttons">
-<a href="{% url 'feedback-update' feedback.id %}">
+
+                                        {% if feedback.customer.user == request.user %}
+                    <span id="feedback-buttons">
+                      <a href="{% url 'feedback-update' feedback.id %}">
                         <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
                       </a>
                       <a href="{% url 'feedback-delete' feedback.id %}">
                         <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
                       </a>
-              </span>
+                    </span>
+                  {% endif %}
                     </div>
 
                       <small class="text-muted">
@@ -44,17 +47,6 @@
 
                   </div>
 
-
-{#                  {% if feedback.customer.user == request.user %}#}
-{#                    <div class="col-lg-2 col-md-2 col-sm-2 col-1 ps-0" id="feedback-buttons">#}
-{#                      <a href="{% url 'feedback-update' feedback.id %}">#}
-{#                        <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">#}
-{#                      </a>#}
-{#                      <a href="{% url 'feedback-delete' feedback.id %}">#}
-{#                        <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">#}
-{#                      </a>#}
-{#                    </div>#}
-{#                  {% endif %}#}
                 </div>
               </div>
 
