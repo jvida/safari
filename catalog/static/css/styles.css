@@ -1,8 +1,3 @@
-/*.sidebar-nav {*/
-/*    margin-top: 20px;*/
-/*    padding: 0;*/
-/*    list-style: none;*/
-/*}*/
 
 /* so header image has max width*/
 .container-header-image, #container-header-title {
@@ -42,12 +37,7 @@
     margin-bottom: -0.25rem;
 }
 
-/*a.delete-row, a.add-row {*/
-/*    position: absolute;*/
-/*    right: 7rem;*/
-/*}*/
-
-/* park images */
+/* park images start */
 /*so park image has max width*/
 .container-offer-image-start {
     max-width: 50%;
@@ -106,7 +96,7 @@
     border-bottom-left-radius: 45px;
     border-bottom-right-radius: 45px;
 }
-/*  */
+/* park images end */
 
 /* so footer is fixed at the bottom of a page */
 #page-container {
@@ -122,18 +112,13 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  /*margin-top: 50rem;*/
 }
-/*  */
+/* footer end */
 
 .container-header-logo {
     max-width: 130px;
     margin: 0 auto;
 }
-
-/*#feedback {*/
-/*    padding-bottom: 1rem;*/
-/*}*/
 
 a[href^="mailto:"], a[href^="tel:"] {
   /*font-family: sans-serif;*/
@@ -141,10 +126,6 @@ a[href^="mailto:"], a[href^="tel:"] {
   /*font-size: 11px;*/
 }
 
-/*.gallery-img {*/
-/*    max-width: 200px;*/
-/*    max-height: 200px;*/
-/*}*/
 
 /* Feedbacks Start*/
 #feedback {
@@ -152,23 +133,22 @@ a[href^="mailto:"], a[href^="tel:"] {
 }
 
 #feedback-profile-area {
-      display:flex;
-  align-items:flex-start;
-  flex-direction: row;
+    display:flex;
+    align-items:flex-start;
+    flex-direction: row;
 }
 
-.feedback-header-middle {
+#feedback-header-middle {
     flex: 1;
 }
 
-.flex-container {
-
-      display:flex;
-  align-items:flex-start;
-  flex-direction: row;
+#header-flex-container {
+    display:flex;
+    align-items:flex-start;
+    flex-direction: row;
 }
 
-.feedback-header-img {
+#feedback-header-img {
     min-width: 4.5rem;
     max-width: 4.5rem;
 }
@@ -189,11 +169,6 @@ a[href^="mailto:"], a[href^="tel:"] {
     margin-left: .75rem;
     margin-bottom: .3rem;
     margin-top: -.3rem;
-}
-
-#my-expeditions-buttons > a > img {
-    margin-left: .3rem;
-    margin-bottom: .1rem;
 }
 /* Feedbacks END */
 
@@ -223,13 +198,11 @@ a[href^="mailto:"], a[href^="tel:"] {
     float: right;
     margin-left: 1.5rem;
 }
-/* My expeditions END */
 
-/* About us START */
-#contacts > p > b > a {
-    text-decoration: none;
+#my-expeditions-buttons > a > img {
+    margin-left: .3rem;
+    margin-bottom: .1rem;
 }
-/* About us END */
 
 .list-group-item {
     background: #fcfbfb;
@@ -242,3 +215,10 @@ a[href^="mailto:"], a[href^="tel:"] {
 #my-rest {
     background: aliceblue;
 }
+/* My expeditions END */
+
+/* About us START */
+#contacts > p > b > a {
+    text-decoration: none;
+}
+/* About us END */
