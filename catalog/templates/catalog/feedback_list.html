@@ -12,35 +12,49 @@
     {% if feedback_list %}
       {% for feedback in feedback_list %}
         <div class="row justify-content-center py-3">
-          <div class="col-md-10 col-lg-10 px-2 px-md-4 pt-lg-0">
-            <div class="px-4 py-3 border rounded" id="feedback">
+          <div class="col-12 col-md-11 col-lg-11 px-2 px-md-4 pt-lg-0">
+            <div class="px-4 py-3 px-md-5 py-md-4 border rounded" id="feedback">
               <div class="feedback-header">
                 <div class="row">
-                  <div class="col-lg-10 col-md-10 col-sm-9 col-9" id="feedback-profile-area">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-12" id="feedback-profile-area">
                     <div class="feedback-header-img">
                       <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ feedback.customer.picture }}" alt="">
                     </div>
-                    <span>
-                      <b>{{ feedback.customer.user.username }}</b><br>
-                      <small class="text-muted">
-                        {{ feedback.date_created.date }}
-                        {% if feedback.date_created.date != feedback.date_last_edit.date or feedback.date_created.ctime != feedback.date_last_edit.ctime %}
-                          (<i>edited on {{ feedback.date_last_edit.date }}</i>)
-                        {% endif %}
-                      </small>
-                    </span>
-                  </div>
+                    <span class="feedback-header-middle">
 
-                  {% if feedback.customer.user == request.user %}
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-3" id="feedback-buttons">
-                      <a href="{% url 'feedback-update' feedback.id %}">
+                    <div class="flex-container">
+                      <b>{{ feedback.customer.user.username }}</b>
+                      <span id="my-expeditions-buttons">
+<a href="{% url 'feedback-update' feedback.id %}">
                         <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
                       </a>
                       <a href="{% url 'feedback-delete' feedback.id %}">
                         <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">
                       </a>
+              </span>
                     </div>
-                  {% endif %}
+
+                      <small class="text-muted">
+                        {{ feedback.date_created.date }}
+                        {% if feedback.date_created.date != feedback.date_last_edit.date or feedback.date_created.ctime != feedback.date_last_edit.ctime %}
+                          <br>(<i>edited on {{ feedback.date_last_edit.date }}</i>)
+                        {% endif %}
+                      </small>
+                    </span>
+
+                  </div>
+
+
+{#                  {% if feedback.customer.user == request.user %}#}
+{#                    <div class="col-lg-2 col-md-2 col-sm-2 col-1 ps-0" id="feedback-buttons">#}
+{#                      <a href="{% url 'feedback-update' feedback.id %}">#}
+{#                        <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">#}
+{#                      </a>#}
+{#                      <a href="{% url 'feedback-delete' feedback.id %}">#}
+{#                        <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Bootstrap" width="20" height="20">#}
+{#                      </a>#}
+{#                    </div>#}
+{#                  {% endif %}#}
                 </div>
               </div>
 

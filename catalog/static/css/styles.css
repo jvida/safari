@@ -157,7 +157,19 @@ a[href^="mailto:"], a[href^="tel:"] {
   flex-direction: row;
 }
 
+.feedback-header-middle {
+    flex: 1;
+}
+
+.flex-container {
+
+      display:flex;
+  align-items:flex-start;
+  flex-direction: row;
+}
+
 .feedback-header-img {
+    min-width: 4.5rem;
     max-width: 4.5rem;
 }
 
@@ -180,13 +192,11 @@ a[href^="mailto:"], a[href^="tel:"] {
 }
 
 #my-expeditions-buttons > a > img {
-    /*margin-left: .75rem;*/
-    /*margin-bottom: 1.3rem;*/
-    /*margin-top: .5rem;*/
+    margin-left: .75rem;
 
-    margin-left: .3rem;
-    margin-bottom: .1rem;
-    /*margin-top: .5rem;*/
+    /*margin-left: .3rem;*/
+    margin-bottom: .3rem;
+    margin-top: -.3rem;
 }
 /* Feedbacks END */
 
@@ -213,8 +223,9 @@ a[href^="mailto:"], a[href^="tel:"] {
 
 /* My expeditions START */
 #my-expeditions-buttons {
-    float: right;
-    margin-left: 1.5rem;
+    /*float: right;*/
+    /*margin-left: 1.5rem;*/
+    margin-left: auto;
 }
 /* My expeditions END */
 
