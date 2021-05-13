@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="px-4 pt-4">
+  <div class="px-2 px-lg-3 pt-4">
     <h1>Create your ideal expedition</h1>
   </div>
 
@@ -35,7 +35,7 @@
               {{ expedition_form.number_of_people|as_crispy_field }}
               {{ expedition_form.message_for_us|as_crispy_field }}
             </div>
-            <div class="d-grid gap-2 col-5 mx-auto py-5">
+            <div class="d-grid col-9 col-sm-5 mx-auto pt-4 pb-5">
               <button class="btn btn-primary" type="submit">Submit</button>
             </div>
           </form>
