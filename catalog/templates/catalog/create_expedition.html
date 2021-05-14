@@ -9,38 +9,34 @@
   </div>
 
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="p-5">
-          <form id="form-container" method="post">
-            {% csrf_token %}
-            {{ trip_formset.management_form }}
-
-            {% for form in trip_formset %}
-              <div class="crispy-form pb-3">
-                <h2>Trip</h2>
-                {{ form|crispy }}
-              </div>
-            {% endfor %}
-            <div class="crispy-form-expedition">
-{#              {{ expedition_form|crispy }}#}
-              <div class="row">
-                <div class="col-md-6 mb-0">
-                  {{ expedition_form.date_from|as_crispy_field }}
-                </div>
-                <div class="col-md-6 mb-0">
-                  {{ expedition_form.date_to|as_crispy_field }}
-                </div>
-              </div>
-              {{ expedition_form.number_of_people|as_crispy_field }}
-              {{ expedition_form.message_for_us|as_crispy_field }}
+    <div class="row justify-content-center pt-4 pb-4">
+      <div class="col-12 px-2 px-md-4 col-lg-11 col-xl-10">
+        <form id="expedition-form" method="post">
+          {% csrf_token %}
+          {{ trip_formset.management_form }}
+          {% for form in trip_formset %}
+            <div class="crispy-form pb-3">
+              <h2>Trip</h2>
+              {{ form|crispy }}
             </div>
-            <div class="d-grid col-9 col-sm-5 mx-auto pt-4 pb-5">
-              <button class="btn btn-primary" type="submit">Submit</button>
+          {% endfor %}
+          <div class="crispy-form-expedition">
+            <div class="row">
+              <div class="col-md-6 mb-0">
+                {{ expedition_form.date_from|as_crispy_field }}
+              </div>
+              <div class="col-md-6 mb-0">
+                {{ expedition_form.date_to|as_crispy_field }}
+              </div>
             </div>
-          </form>
-        </div>
+            {{ expedition_form.number_of_people|as_crispy_field }}
+            {{ expedition_form.message_for_us|as_crispy_field }}
+          </div>
+        </form>
       </div>
+    </div>
+    <div class="d-grid col-9 col-sm-5 mx-auto pt-1 pb-5">
+      <button class="btn btn-primary" form="expedition-form" type="submit">Submit</button>
     </div>
   </div>
 
