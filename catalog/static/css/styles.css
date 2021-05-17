@@ -222,3 +222,7 @@ a[href^="mailto:"], a[href^="tel:"] {
     text-decoration: none;
 }
 /* About us END */
+
+.pagination {
+    margin-bottom: 0;
+}

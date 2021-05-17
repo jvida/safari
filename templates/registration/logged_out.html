@@ -2,22 +2,18 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <div class="px-4 pt-4">
+  <div class="px-2 px-lg-3 pt-4">
     <h1>Logout</h1>
   </div>
 
   <div class="container">
-{#    <div class="row justify-content-center">#}
-{#      <div class="col-lg-12">#}
-{#        <div class="p-5">#}
-{#          <p>Logged out!</p>#}
-{#        </div>#}
-{#      </div>#}
-{#    </div>#}
-    <div class="row justify-content-center">
-      <div class="d-grid gap-2 col-5 mx-auto py-5">
-          <a class="btn btn-primary" href="{% url 'login'%}" role="button">Click here to login again.</a>
+    <div class="row justify-content-center py-4">
+      <div class="col-12 px-2 px-md-4 col-lg-11 col-xl-10">
+        <p>You were logged out.</p>
       </div>
+    </div>
+    <div class="d-grid col-9 col-sm-5 mx-auto pt-1 pb-5">
+      <a class="btn btn-primary" href="{% url 'login'%}" role="button">Click here to login again.</a>
     </div>
   </div>
 {% endblock %}

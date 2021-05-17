@@ -1,25 +1,25 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Title</title>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#</body>#}
-{#</html>#}
 
 {% extends "base_generic.html" %}
 
 {% block content %}
 
-<h1>Delete Feedback</h1>
+  <div class="px-2 px-lg-3 pt-4">
+    <h1>Delete Feedback</h1>
+  </div>
 
-<p>Are you sure you want to delete this feedback? "{{ feedback.content }}"</p>
+  <div class="container">
+    <div class="row justify-content-center py-4">
+      <div class="col-12 px-2 px-md-4 col-lg-11 col-xl-10">
+        <p>Are you sure you want to delete the feedback from <b>{{ feedback.date_created.date }}</b>?</p>
+      </div>
+    </div>
 
-<form action="" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="Yes, delete.">
-</form>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="d-grid col-9 col-sm-5 mx-auto pt-1 pb-5">
+        <button class="btn btn-danger" type="submit">Yes, delete.</button>
+      </div>
+    </form>
+  </div>
 
 {% endblock %}

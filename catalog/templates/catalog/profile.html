@@ -6,34 +6,32 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="p-4">
+  <div class="px-2 px-lg-3 pt-4">
     <h1>My Profile - {{ customer.user }}</h1>
   </div>
 
   <div class="container">
-    <div class="row justify-content-evenly px-5 py-2">
-      <div class="col-lg-4 col-md-6 col-sm-12  col-12  rounded">
-         <div class="profile-img">
-    <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ customer.picture }}">
-         </div>
+    <div class="row justify-content-center py-4">
+      <div class="col-9 col-md-5 col-lg-5 col-xl-4 rounded">
+        <div class="profile-img">
+          <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ customer.picture }}">
+        </div>
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-10 col-10">
+      <div class="col-7 col-md-5 col-lg-4 col-xl-4 pt-4 pt-md-0 ps-lg-4">
         <h1>{{ customer.user }}</h1>
         <h3>{{ customer }}</h3><br>
         <p><img src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="20" height="20"> {{ customer.user.email }}</p>
         <p><img src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="20" height="20"> {{ customer.phone_number }}</p>
       </div>
-      <div class="col-lg-3 col-md-2 col-sm-2 col-2" style="text-align: end">
-{#          <p><a class="btn btn-primary" href="{% url 'profile-edit'%}" role="button">Edit</a></p>#}
+      <div class="col-2 col-md-1 col-lg-3 col-xl-1 pt-4 pt-md-0" style="text-align: end">
         <a href="{% url 'profile-edit'%}">
-                        <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="25" height="25">
-                      </a>
+          <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="25" height="25">
+        </a>
       </div>
-      </div>
-      <div class="row justify-content-center px-5">
-              <div class="col-lg-10" style="text-align: end">
-            <a href="{% url 'password_reset' %}">Change password</a></div>
-      </div>
-  <hr>
     </div>
+    <div class="row justify-content-center px-5">
+            <div class="col-lg-10" style="text-align: end">
+          <a href="{% url 'password_reset' %}">Change password</a></div>
+    </div>
+  </div>
 {% endblock %}

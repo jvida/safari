@@ -16,11 +16,11 @@
           {{ trip_formset.management_form }}
           {% for form in trip_formset %}
             <div class="crispy-form pb-3">
-              <h2>Trip</h2>
+{#              <h2>Trip</h2>#}
               {{ form|crispy }}
             </div>
           {% endfor %}
-          <div class="crispy-form-expedition">
+          <div class="crispy-form-expedition pt-4">
             <div class="row">
               <div class="col-md-6 mb-0">
                 {{ expedition_form.date_from|as_crispy_field }}
