@@ -7,7 +7,11 @@
 
 {% block content %}
   <div class="px-2 px-lg-3 pt-4">
-    <h1>My Profile - {{ customer.user }}</h1>
+    {% if user == customer.user %}
+      <h1>My Profile</h1>
+    {% else %}
+      <h1>{{ customer.user }}'s Profile</h1>
+    {% endif %}
   </div>
 
   <div class="container">
@@ -20,18 +24,36 @@
       <div class="col-7 col-md-5 col-lg-4 col-xl-4 pt-4 pt-md-0 ps-lg-4">
         <h1>{{ customer.user }}</h1>
         <h3>{{ customer }}</h3><br>
-        <p><img src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="20" height="20"> {{ customer.user.email }}</p>
-        <p><img src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="20" height="20"> {{ customer.phone_number }}</p>
+        {% if user == customer.user %}
+          <p><img src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="20" height="20"><a class="profile-links" href="mailto:{{ customer.user.email }}">{{ customer.user.email }}</a></p>
+          <p><img src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="20" height="20"><a class="profile-links" href="tel:{{ customer.phone_number }}">{{ customer.phone_number }}</a></p>
+        {% else %}
+          {% if customer.hidden_email %}
+            <p><img src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="20" height="20"><small class="text-muted profile-links">This user doesn't wish to be reachable via email.</small></p>
+          {% else %}
+            <p><img src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="20" height="20"><a class="profile-links" href="mailto:{{ customer.user.email }}">{{ customer.user.email }}</a></p>
+          {% endif %}
+          {% if customer.hidden_email or not customer.phone_number %}
+            <p><img src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="20" height="20"><small class="text-muted profile-links">This user doesn't wish to be reachable via phone.</small></p>
+          {% else %}
+            <p><img src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="20" height="20"><a class="profile-links" href="tel:{{ customer.phone_number }}">{{ customer.phone_number }}</a></p>
+          {% endif %}
+        {% endif %}
       </div>
       <div class="col-2 col-md-1 col-lg-3 col-xl-1 pt-4 pt-md-0" style="text-align: end">
-        <a href="{% url 'profile-edit'%}">
-          <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="25" height="25">
-        </a>
+        {% if user == customer.user %}
+          <a href="{% url 'profile-edit' username=user.get_username %}">
+            <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="25" height="25">
+          </a>
+        {% endif %}
       </div>
     </div>
-    <div class="row justify-content-center px-5">
-            <div class="col-lg-10" style="text-align: end">
-          <a href="{% url 'password_reset' %}">Change password</a></div>
-    </div>
+    {% if user == customer.user %}
+      <div class="row justify-content-center">
+        <div class="col-9 col-md-11 col-lg-12 col-xl-9" style="text-align: end">
+          <a href="{% url 'password_reset' %}">Change password</a>
+        </div>
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

@@ -24,7 +24,7 @@ def img_validation(picture, mb_limit):
     if not isinstance(picture, str):
         if picture:
             if picture.size > mb_limit * 1024 * 1024:
-                errors['picture'] = _(f'Image file too large ( > {mb_limit}mb )')
+                errors['picture'] = _(f'Image file is too large. ( allowed size< {mb_limit}mb )')
     return errors
 
 
@@ -43,10 +43,15 @@ class CreateNewUserForm(UserCreationForm):
                                                                                                    'international '
                                                                                                    'format. (e.g. '
                                                                                                    '+421944123132)')
+    hidden_email = forms.BooleanField(initial=False, required=False, help_text='Choose whether other registered users '
+                                                                               'can see your email address.')
+    hidden_phone = forms.BooleanField(initial=True, required=False, help_text='Choose whether other registered users '
+                                                                              'can see your phone number.')
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'phone_number')
+        fields = ('username', 'password1', 'password2', 'first_name', 'last_name', 'email',
+                  'phone_number', 'hidden_email', 'hidden_phone')
 
     def clean(self):
         first_name = self.cleaned_data['first_name']
@@ -68,15 +73,23 @@ class CreateNewUserForm(UserCreationForm):
 
 class EditCustomerProfile(forms.ModelForm):
     # bud takto alebo cez clean_phone_number
-    phone_number = forms.RegexField(regex=r'^\+\d{8,15}', max_length=16, required=False)
+    phone_number = forms.RegexField(regex=r'^\+\d{8,15}', max_length=16, required=False, help_text='Enter your phone '
+                                                                                                   'number in '
+                                                                                                   'international '
+                                                                                                   'format. (e.g. '
+                                                                                                   '+421944123132)')
+    hidden_email = forms.BooleanField(required=False, help_text='Choose whether other registered users '
+                                                                'can see your email address.')
+    hidden_phone = forms.BooleanField(required=False, help_text='Choose whether other registered users '
+                                                                'can see your phone number.')
 
     class Meta:
         model = Customer
-        fields = ['phone_number', 'picture']
+        fields = ['phone_number', 'picture', 'hidden_email', 'hidden_phone']
 
     def clean(self):
         picture = self.cleaned_data["picture"]
-        errors = img_validation(picture, mb_limit=1)
+        errors = img_validation(picture, mb_limit=3)
 
         if errors:
             raise ValidationError(errors)

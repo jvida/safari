@@ -28,12 +28,14 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-12 d-none d-sm-block ">
           <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-7  my-auto">
-              <h1><i>Wilderness MANIAC SAFARIS</i></h1>
+            <div class="col-lg-7 col-md-6 col-sm-6  my-auto">
+              <h2><i>Wilderness MANIAC SAFARIS</i></h2>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-5 " style="text-align: end">
-              <h3><a href="tel:+421-944-412-335">+421-944-412-335</a></h3>
-              <h3><a href="mailto:ahojky@gmail.com">ahojky@gmail.com</a></h3>
+            <div class="col-lg-5 col-md-6 col-sm-6 my-auto" style="text-align: end">
+{#              <h3><a href="tel:+421-944-412-335">+421-944-412-335</a></h3>#}
+{#              <h3><a href="mailto:ahojky@gmail.com">ahojky@gmail.com</a></h3>#}
+              <img class="header-icons" src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="21" height="21"><a class="fs-4 profile-links" href="mailto:ahojky@gmail.com">ahojky@gmail.com</a><br>
+              <img class="header-icons" src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="21" height="21"><a class="fs-4 profile-links" href="tel:+421-944-412-335">+421-944-412-335</a>
             </div>
           </div>
         </div>
@@ -91,7 +93,7 @@
           <ul class="navbar-nav mb-2 mb-lg-0">
             {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">{{ user.get_username }}</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'profile' username=user.get_username %}">{{ user.get_username }}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'expeditions'  query='my_expeditions' %}">My Expeditions</a>

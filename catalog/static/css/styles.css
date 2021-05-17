@@ -5,6 +5,10 @@
     /*margin: 0 auto;*/
 }
 
+.header-icons{
+    margin-bottom: 5px;
+}
+
 /* so navbar has max width*/
 .container-fluid {
     max-width: 1400px;
@@ -148,6 +152,11 @@ a[href^="mailto:"], a[href^="tel:"] {
     flex-direction: row;
 }
 
+#header-flex-container > a {
+    text-decoration: none;
+    color: black;
+}
+
 #feedback-header-img {
     min-width: 4.5rem;
     max-width: 4.5rem;
@@ -173,15 +182,10 @@ a[href^="mailto:"], a[href^="tel:"] {
 /* Feedbacks END */
 
 /* Profile Start*/
-/*.profile-img {*/
-/*    !*max-width: 4rem;*!*/
-/*}*/
-
-/*#change-password {*/
-/*    display:flex;*/
-/*    align-items:flex-end;*/
-/*    flex-direction: column;*/
-/*}*/
+.profile-links {
+    text-decoration: none;
+    padding-left: 0.5rem;
+}
 /* Profile END*/
 
 /* So jumping to a specific part of a page considers a sticky navbar */
@@ -225,4 +229,9 @@ a[href^="mailto:"], a[href^="tel:"] {
 
 .pagination {
     margin-bottom: 0;
+}
+
+#hint_id_hidden_email::before, #hint_id_hidden_phone::before {
+    content: "\A";
+    white-space: pre;
 }

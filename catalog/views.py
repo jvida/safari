@@ -93,10 +93,14 @@ def create_new_user(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone_number = form.cleaned_data['phone_number']
+            hidden_email = form.cleaned_data['hidden_email']
+            hidden_phone = form.cleaned_data['hidden_phone']
 
             customer = Customer()
             customer.user = User.objects.create_user(username, email, pswd, first_name=first_name, last_name=last_name)
             customer.phone_number = phone_number
+            customer.hidden_email = hidden_email
+            customer.hidden_phone = hidden_phone
             customer.save()
 
             group = Group.objects.get(name='Customers')
@@ -116,7 +120,12 @@ def create_new_user(request):
 
 
 @login_required
-def edit_user_profile(request):
+def edit_user_profile(request, username):
+    # So they cant get into editing of someone else's profile via entering link with his nickname
+    if username != request.user.username:
+        url = reverse('profile', kwargs={'username': request.user.username})
+        return HttpResponseRedirect(url)
+
     # If this is a POST request then process the Form data
     if request.method == 'POST':
         user_form = EditUserProfile(request.POST, instance=request.user)
@@ -125,8 +134,12 @@ def edit_user_profile(request):
         if user_form.is_valid() and customer_form.is_valid():
             # process the data in forms
             phone_number = customer_form.cleaned_data['phone_number']
+            hidden_email = customer_form.cleaned_data['hidden_email']
+            hidden_phone = customer_form.cleaned_data['hidden_phone']
             customer = Customer.objects.get(user=request.user)
             customer.phone_number = phone_number
+            customer.hidden_email = hidden_email
+            customer.hidden_phone = hidden_phone
 
             # check if user chose a new profile picture
             # if so, it's saved
@@ -141,7 +154,8 @@ def edit_user_profile(request):
                     customer.picture.save(picture.name, picture_square)
             user_form.save()
             customer.save()
-            return HttpResponseRedirect(reverse('profile'))
+            url = reverse('profile', kwargs={'username': request.user.username})
+            return HttpResponseRedirect(url)
     # else it's a GET request so show data
     else:
         customer = Customer.objects.get(user=request.user)
@@ -157,8 +171,8 @@ def edit_user_profile(request):
 
 
 @login_required
-def customer_profile_view(request):
-    customer = Customer.objects.get(user=request.user)
+def customer_profile_view(request, username):
+    customer = Customer.objects.get(user=User.objects.get(username=username))
     context = {
         'customer': customer,
     }

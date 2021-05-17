@@ -18,12 +18,14 @@
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12 col-12" id="feedback-profile-area">
                     <div id="feedback-header-img">
-                      <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ feedback.customer.picture }}" alt="">
+                      <a href="{% url 'profile' username=feedback.customer.user.username %}">
+                        <img class="img-fluid rounded-circle" src="{{ MEDIA_URL }}{{ feedback.customer.picture }}" alt="">
+                      </a>
                     </div>
 
                     <span id="feedback-header-middle">
                       <div id="header-flex-container">
-                        <b>{{ feedback.customer.user.username }}</b>
+                        <a href="{% url 'profile' username=feedback.customer.user.username %}"><b>{{ feedback.customer.user.username }}</b></a>
                         {% if feedback.customer.user == request.user %}
                           <span id="feedback-buttons">
                             <a href="{% url 'feedback-update' feedback.id %}">

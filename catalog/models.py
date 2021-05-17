@@ -19,6 +19,8 @@ class Customer(models.Model):
     phone_number = models.CharField(max_length=16, blank=True,
                                     help_text='Enter your phone number in international format. (e.g. +421944123132)')
     picture = models.ImageField(upload_to='profile_imgs/', default='profile_imgs/anonymous-user.png')
+    hidden_email = models.BooleanField(default=False)
+    hidden_phone = models.BooleanField(default=True)
 
     def __str__(self):
         """String for representing the Model object."""

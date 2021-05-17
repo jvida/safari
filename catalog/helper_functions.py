@@ -1,4 +1,5 @@
 from PIL import Image
+from PIL import ImageOps
 from io import BytesIO
 from django.core.files.base import ContentFile
 from catalog.models import Park
@@ -27,6 +28,8 @@ def resize_image(image: Image, length: int, content_file: bool):
     :param content_file: Whether to return Image or ContentFile
     :return: Return the resized image either as Image or ContentFile.
     """
+
+    image = ImageOps.exif_transpose(image)
 
     """
     Resizing strategy : 
