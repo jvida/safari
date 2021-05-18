@@ -66,6 +66,8 @@
                 <li><a class="dropdown-item" href="{% url 'parks' %}#parks">Parks</a></li>
                 <li><a class="dropdown-item" href="{% url 'parks' %}#accommodation">Accommodation</a></li>
                 <li><a class="dropdown-item" href="{% url 'parks' %}#food">Food</a></li>
+                <li><a class="dropdown-item" href="{% url 'parks' %}#prices">Prices</a></li>
+                <li><a class="dropdown-item" href="{% url 'parks' %}#contact-us">Contact Us</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -187,5 +189,15 @@
 
   <script src="{% static 'javascript/app.js' %}"></script>
   <script src="{% static 'javascript/lightbox.js' %}"></script>
+
+  <script type="text/javascript">
+    $(function(){
+        const navMain = $(".navbar-collapse");
+        navMain.on("click", "a:not([data-toggle])", null, function () {
+            navMain.collapse('hide');
+            console.log("tak2?");
+     });
+  });
+  </script>
 </body>
 </html>

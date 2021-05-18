@@ -15,8 +15,8 @@
     </div>
 
     <div class="container">
-    {% if park_list %}
-      {% for park in park_list %}
+      {% if park_list %}
+        {% for park in park_list %}
           <div class="row">
             <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
               <div class="pb-3">
@@ -34,17 +34,16 @@
               {{ park.description|bleach }}
             </div>
           </div>
-{#        </div>#}
-        <hr>
-      {% endfor %}
-    {% else %}
-      <div class="row">
-        <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
-          <p>There are no parks currently.</p>
+          <hr>
+        {% endfor %}
+      {% else %}
+        <div class="row">
+          <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
+            <p>There are no parks currently.</p>
+          </div>
         </div>
-      </div>
-    {% endif %}
-      </div>
+      {% endif %}
+    </div>
   </section>
 
 
@@ -54,19 +53,29 @@
       <h1>Accommodation</h1>
     </div>
 
-        <div class="container">
-        <div class="row">
-          <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
-            <p>
-              During the whole trip there will be a professional chef ready to cook whatever he see in your eyes. In the beggining he would ask you wether you eat meat/fish or not. After obtaining the informations he needs he would prepare menu that would suit your needs.
-              Breakfast- pancakes/omelets, boiled eggs,  cheese, butter, bread, marmalede, coffe, tea, fruit
-              Lunch- rice/pasta, meat/vegeterian dish, vegetable, fruit
-              Dinner- rice/pasta, meat/vegeterian dish, vegetable, fruit
-            </p>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
+          <p>
+            We offer a variety of accommodation which will definitely fulfill your expectations.
+            You stay at lodges and tented camps depending on your preference.
+            All accommodations have electric lights, battery recharging facilities,
+            some have Wi-Fi and swimming pools.
+          </p>
+          <p>
+            Spending a night in a tent under the starry sky surrounded by wild animals expressing themselves
+            with a large variety of different noises can be a magical experience which doesn't fit everyone´s demand.
+            For those who don't delight in camping there is also  another option- safari lodge.
+            It is a more luxurious and comfortable way of spending your night,
+            in a room with your own bed, shower etc.
+            <br>
+            Depending on the time of arrival and departure you either spend a night in a hotel or not.
+            We will inform you in advance and choose accommodation you would like.
+          </p>
         </div>
       </div>
-          <hr>
+    </div>
+    <hr>
   </section>
 
   <section>
@@ -74,18 +83,63 @@
     <div class="px-2 px-lg-3 pt-4">
       <h1>Food</h1>
     </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
-            <p>
-              During the whole trip there will be a professional chef ready to cook whatever he see in your eyes. In the beggining he would ask you wether you eat meat/fish or not. After obtaining the informations he needs he would prepare menu that would suit your needs.
-              Breakfast- pancakes/omelets, boiled eggs,  cheese, butter, bread, marmalede, coffe, tea, fruit
-              Lunch- rice/pasta, meat/vegeterian dish, vegetable, fruit
-              Dinner- rice/pasta, meat/vegeterian dish, vegetable, fruit
-            </p>
-          </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
+          <p>
+            During the whole trip there will be a professional chef ready to cook whatever he see in your eyes. In the beggining he would ask you wether you eat meat/fish or not. After obtaining the informations he needs he would prepare menu that would suit your needs.
+            Breakfast- pancakes/omelets, boiled eggs,  cheese, butter, bread, marmalede, coffe, tea, fruit
+            Lunch- rice/pasta, meat/vegeterian dish, vegetable, fruit
+            Dinner- rice/pasta, meat/vegeterian dish, vegetable, fruit
+          </p>
         </div>
       </div>
+    </div>
+    <hr>
+  </section>
+
+  <section>
+    <a class="jump-href" id="prices"></a>
+    <div class="px-2 px-lg-3 pt-4">
+      <h1>Prices</h1>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
+          <p>
+            As far as prices are concerned, they depend on current park entry fees
+            which are inconsistent as well as on accommodation you choose.
+            <br>
+            We are eager to find it out for you as soon as you tell us which trip you are interested in.
+            <br>
+            Please let us know.
+          </p>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+
+  <section>
+    <a class="jump-href" id="contact-us"></a>
+    <div class="px-2 px-lg-3 pt-4">
+      <h1>Contact Us</h1>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 px-2 py-4 px-md-4 py-lg-4">
+          <p>
+            Are you looking for a safari trip that would fit your expectations?
+            <br>
+            <a href="{% url 'about-us' %}#contacts" id="contact-link">Contact us</a> and our guide will answer all your questions
+            and would recommend the best combination of parks as well so you can get most out of your time spent in Tanzania.
+          </p>
+        </div>
+      </div>
+    </div>
   </section>
 
 {% endblock %}

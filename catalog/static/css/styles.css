@@ -235,3 +235,8 @@ a[href^="mailto:"], a[href^="tel:"] {
     content: "\A";
     white-space: pre;
 }
+
+#contact-link {
+    color: black;
+    font-weight: bold;
+}
