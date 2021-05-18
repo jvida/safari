@@ -6,6 +6,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+  <a class="jump-href" id="header-anchor"></a>
   <div class="px-2 px-lg-3 pt-4">
     <h1>Login</h1>
   </div>
@@ -24,12 +25,16 @@
             {{ form|crispy }}
             <div class="d-grid col-9 col-sm-5 col-md-7 mx-auto pt-3 pb-3">
               <input class="btn btn-primary" type="submit" value="Login"/>
+              {% if next %}
+              <input type="hidden" name="next" value="{{ next }}#header-anchor"/>
+              {% else %}
               <input type="hidden" name="next" value="{{ next }}"/>
-              <a class="pt-2" href="{% url 'password_reset' %}" role="button" style="text-align: center">Lost password?</a>
+              {% endif %}
+              <a class="pt-2" href="{% url 'password_reset' %}#header-anchor" role="button" style="text-align: center">Lost password?</a>
             </div>
             <hr>
             <div class="d-grid col-9 col-sm-5 col-md-7 mx-auto pt-3 pb-3">
-              <a class="btn btn-primary" href="{% url 'signup' %}" role="button">Sign Up</a>
+              <a class="btn btn-primary" href="{% url 'signup' %}#header-anchor" role="button">Sign Up</a>
             </div>
           </form>
         </div>

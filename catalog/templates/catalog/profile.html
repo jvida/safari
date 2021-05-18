@@ -6,6 +6,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+  <a class="jump-href" id="header-anchor"></a>
   <div class="px-2 px-lg-3 pt-4">
     {% if user == customer.user %}
       <h1>My Profile</h1>
@@ -42,7 +43,7 @@
       </div>
       <div class="col-2 col-md-1 col-lg-3 col-xl-1 pt-4 pt-md-0" style="text-align: end">
         {% if user == customer.user %}
-          <a href="{% url 'profile-edit' username=user.get_username %}">
+          <a href="{% url 'profile-edit' username=user.get_username %}#header-anchor">
             <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="25" height="25">
           </a>
         {% endif %}
@@ -51,7 +52,7 @@
     {% if user == customer.user %}
       <div class="row justify-content-center">
         <div class="col-9 col-md-11 col-lg-12 col-xl-9" style="text-align: end">
-          <a href="{% url 'password_reset' %}">Change password</a>
+          <a href="{% url 'password_reset' %}#header-anchor">Change password</a>
         </div>
       </div>
     {% endif %}

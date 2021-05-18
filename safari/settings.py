@@ -124,7 +124,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'catalog/static')
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/#home'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

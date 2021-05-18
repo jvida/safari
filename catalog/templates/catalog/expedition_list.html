@@ -6,6 +6,7 @@
 {% load bleach_tags %}
 
 {% block content %}
+  <a class="jump-href" id="header-anchor"></a>
   <div class="px-2 px-lg-3 pt-4">
     {% if query == "recommended" %}
       <h1>Our recommended expeditions</h1>
@@ -21,7 +22,7 @@
           <a class="jump-href" id="{{ expedition.name }}"></a>
           <div class="row align-items-center py-4">
             <div class="col-lg-7 px-2 px-md-4 pb-md-4">
-                <h2 class="display-4">{{ expedition.name }} safari...</h2>
+                <h2 class="display-4">{{ expedition.name }}...</h2>
                 <p>{{ expedition.description|bleach|linebreaks }}</p>
             </div>
             <div class="col-lg-5 px-2 pt-4 px-md-4">
@@ -78,41 +79,25 @@
           {% endif %}
           <div class="d-grid col-5 mx-auto py-4">
             {% if not expedition.single_trip %}
-              <a class="btn btn-primary" href="{{ expedition.get_absolute_url_rec }}" role="button">Let's go!</a>
+              <a class="btn btn-primary" href="{{ expedition.get_absolute_url_rec }}#header-anchor" role="button">Let's go!</a>
             {% else %}
-              <a class="btn btn-primary" href="{{ expedition.get_absolute_url_rec_single }}" role="button">Let's go!</a>
+              <a class="btn btn-primary" href="{{ expedition.get_absolute_url_rec_single }}#header-anchor" role="button">Let's go!</a>
             {% endif %}
           </div>
         {% elif query == "my_expeditions"%}
           <div class="row justify-content-center py-4">
-{#            <div class="col-lg-10 px-2 pb-3 px-md-4">#}
-{#              <span id="my-expeditions-buttons">#}
-{#                {% if not expedition.single_trip %}#}
-{#                  <a href="{{ expedition.get_absolute_url_my }}">#}
-{#                {% else %}#}
-{#                  <a href="{{ expedition.get_absolute_url_my_single }}">#}
-{#                {% endif %}#}
-{#                    <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">#}
-{#                  </a>#}
-{#                <a href="{% url 'expedition-delete'  pk=expedition.id %}">#}
-{#                  <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Delete" width="20" height="20">#}
-{#                </a>#}
-{#              </span>#}
-{#              <h2>{{ expedition.date_from }} - {{ expedition.date_to }}</h2>#}
-{#            </div>#}
-
             <div class="col-12 px-2 px-md-4 col-lg-11 col-xl-10">
               <ol class="list-group list-group-numbered">
                 <li class="list-group-item" id="my-rest">
                   <span id="my-expeditions-buttons">
                 {% if not expedition.single_trip %}
-                  <a href="{{ expedition.get_absolute_url_my }}">
+                  <a href="{{ expedition.get_absolute_url_my }}#header-anchor">
                 {% else %}
-                  <a href="{{ expedition.get_absolute_url_my_single }}">
+                  <a href="{{ expedition.get_absolute_url_my_single }}#header-anchor">
                 {% endif %}
                     <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
                   </a>
-                <a href="{% url 'expedition-delete'  pk=expedition.id %}">
+                <a href="{% url 'expedition-delete'  pk=expedition.id %}#header-anchor">
                   <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Delete" width="20" height="20">
                 </a>
               </span>
@@ -174,13 +159,13 @@
           Create your own
         </button>
         <ul class="dropdown-menu dropdown-menu-start dropdown-menu-dark" aria-labelledby="btnGroupDrop1">
-          <li><a class="dropdown-item" href="{% url 'create-expedition' exp_type='safari'%}">Safari expedition</a></li>
-          <li><a class="dropdown-item" href="{% url 'create-expedition' exp_type='single_trip'%}">Single destination expedition</a></li>
+          <li><a class="dropdown-item" href="{% url 'create-expedition' exp_type='safari'%}#header-anchor">Safari expedition</a></li>
+          <li><a class="dropdown-item" href="{% url 'create-expedition' exp_type='single_trip'%}#header-anchor">Single destination expedition</a></li>
         </ul>
       </div>
     {% else %}
       <div class="d-grid col-9 col-sm-5 mx-auto pt-4 pb-5">
-        <a class="btn btn-primary" href="{% url 'create-expedition' exp_type='safari'%}" role="button">Create your own safari expedition</a>
+        <a class="btn btn-primary" href="{% url 'create-expedition' exp_type='safari'%}#header-anchor" role="button">Create your own safari expedition</a>
       </div>
     {% endif %}
   </div>

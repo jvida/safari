@@ -56,28 +56,36 @@
         <div class="collapse navbar-collapse px-4" id="navbarNavAltMarkup">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}#home">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="{% url 'parks' %}">Parks/Accommodation</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuGeneralInfo" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                General Info
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuGeneralInfo">
+                <li><a class="dropdown-item" href="{% url 'parks' %}#parks">Parks</a></li>
+                <li><a class="dropdown-item" href="{% url 'parks' %}#accommodation">Accommodation</a></li>
+                <li><a class="dropdown-item" href="{% url 'parks' %}#food">Food</a></li>
+              </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuExpeditions" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Expeditions
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuExpeditions">
-                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#7-day">7-day</a></li>
-                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#5-day">5-day</a></li>
-                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#2-day">2-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#5-day safari">5-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#2-day safari">2-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#7-day safari">7-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#Mount Kilimanjaro">Mount Kilimanjaro</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#create-own">Create own</a></li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="{% url 'gallery' %}">Gallery</a>
+              <a class="nav-link active" href="{% url 'gallery' %}#gallery">Gallery</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="{% url 'feedbacks' %}">Feedbacks</a>
+              <a class="nav-link active" href="{% url 'feedbacks' %}#header-anchor">Feedbacks</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuAboutUs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -93,28 +101,28 @@
           <ul class="navbar-nav mb-2 mb-lg-0">
             {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'profile' username=user.get_username %}">{{ user.get_username }}</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'profile' username=user.get_username %}#header-anchor">{{ user.get_username }}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'expeditions'  query='my_expeditions' %}">My Expeditions</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'expeditions'  query='my_expeditions' %}#header-anchor">My Expeditions</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'logout'%}">Logout</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'logout'%}#header-anchor">Logout</a>
               </li>
             {% else %}
               {% if not "accounts" in request.path and not "signup" in request.path %}
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={{request.path}}">Register</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={{request.path}}#header-anchor">Register</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={{request.path}}#header-anchor">Login</a>
                 </li>
               {% else %}
-                <li class="nav-item"> {# TODO toto som doplnil - treba otestovat ci to je take spravanie ako chcem #}
-                  <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={% url 'index'%}">Register</a>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'signup'%}?next={% url 'index'%}#header-anchor">Register</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={% url 'index'%}">Login</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'login'%}?next={% url 'index'%}#header-anchor">Login</a>
                 </li>
               {% endif %}
             {% endif %}
@@ -138,7 +146,7 @@
                     <ul class="pagination justify-content-center pt-4">
                       {% if page_obj.has_previous %}
                         <li class="page-item">
-                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">&laquo;</a>
+                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}#header-anchor" tabindex="-1" aria-disabled="true">&laquo;</a>
                         </li>
                       {% endif %}
                       {% for i in page_obj.paginator.page_range %}
@@ -149,12 +157,13 @@
                           {% else %}
                             <li class="page-item">
                           {% endif %}
-                          <a class="page-link" href="{{ request.path }}?page={{ i }}">{{ i }}</a></li>
+                            <a class="page-link" href="{{ request.path }}?page={{ i }}#header-anchor">{{ i }}</a>
+                            </li>
                         {% endif %}
                       {% endfor %}
                       {% if page_obj.has_next %}
                         <li class="page-item">
-                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">&raquo;</a>
+                          <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}#header-anchor">&raquo;</a>
                         </li>
                       {% endif %}
                     </ul>
