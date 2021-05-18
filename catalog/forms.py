@@ -36,8 +36,8 @@ def date_validation(errors, given_date, newest_allowed, oldest_allowed, error_fi
 
 class CreateNewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
+    first_name = forms.CharField(max_length=50, required=False)
+    last_name = forms.CharField(max_length=50, required=False)
     phone_number = forms.RegexField(regex=r'^\+\d{8,15}', max_length=16, required=False, help_text='Enter your phone '
                                                                                                    'number in '
                                                                                                    'international '
@@ -103,8 +103,8 @@ class EditCustomerProfile(forms.ModelForm):
 
 
 class EditUserProfile(forms.ModelForm):
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
+    first_name = forms.CharField(max_length=50, required=False)
+    last_name = forms.CharField(max_length=50, required=False)
 
     class Meta:
         model = User

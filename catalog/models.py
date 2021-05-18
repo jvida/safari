@@ -24,7 +24,7 @@ class Customer(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.user.last_name}, {self.user.first_name}'
+        return f'{self.user.username} ({self.user.last_name}, {self.user.first_name})'
 
 
 class Feedback(models.Model):

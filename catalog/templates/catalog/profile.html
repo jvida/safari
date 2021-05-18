@@ -24,7 +24,7 @@
       </div>
       <div class="col-7 col-md-5 col-lg-4 col-xl-4 pt-4 pt-md-0 ps-lg-4">
         <h1>{{ customer.user }}</h1>
-        <h3>{{ customer }}</h3><br>
+        <h3>{{ customer.user.last_name }} {{ customer.user.first_name }}</h3><br>
         {% if user == customer.user %}
           <p><img src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="20" height="20"><a class="profile-links" href="mailto:{{ customer.user.email }}">{{ customer.user.email }}</a></p>
           <p><img src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="20" height="20"><a class="profile-links" href="tel:{{ customer.phone_number }}">{{ customer.phone_number }}</a></p>
