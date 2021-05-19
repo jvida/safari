@@ -198,17 +198,22 @@
   {#          console.log("tak2?");#}
   {#   });#}
   {# });#}
+  $('.nav-item a').on('click', function(){
+      console.log("click");
+    
+    $('.navbar-toggler').click(); //bootstrap 4.x
+});
 
-$(function(){
-//const navLinks = document.querySelectorAll('.nav-item')
-    const navLinks = document.querySelectorAll('.dropdown-item')
-const menuToggle = document.getElementById('navbarNavAltMarkup')
-const bsCollapse = new bootstrap.Collapse(menuToggle)
-navLinks.forEach((l) => {
-    l.addEventListener('click', () => { bsCollapse.toggle() })
+{#$(function(){#}
+{#//const navLinks = document.querySelectorAll('.nav-item')#}
+{#    const navLinks = document.querySelectorAll('.dropdown-item')#}
+{#const menuToggle = document.getElementById('navbarNavAltMarkup')#}
+{#const bsCollapse = new bootstrap.Collapse(menuToggle)#}
+{#navLinks.forEach((l) => {#}
+{#    l.addEventListener('click', () => { bsCollapse.toggle() })#}
     {#l.addEventListener('click', () => { console.log("click"); document.getElementById("navbarNavAltMarkup").collapse(); })#}
- });
- });
+{# });#}
+{# });#}
 
 
   </script>
