@@ -198,11 +198,25 @@
   {#          console.log("tak2?");#}
   {#   });#}
   {# });#}
-{#  $('.dropdown-item').on('click', function(){#}
-{#      console.log("click");#}
-{##}
-{#    $('.navbar-toggler').click(); //bootstrap 4.x#}
-{#});#}
+ {# $('.dropdown-item').on('click', function(){#}
+ {#     console.log("click");#}
+ {##}
+ {#   $('.navbar-toggler').click(); //bootstrap 4.x#}
+ {# });#}
+  if ($(window).width() > 991) {
+      console.log("in");
+      }
+  $(".dropdown-item").click(function() {
+      console.log("click");
+  if ($(window).width() < 991) {
+      console.log("in")
+      const href = $(this).attr('href');
+      console.log(href);
+      $('body, html').animate({ // an animation if you prefer, slim jQuery doesn't include animate
+      scrollTop: $("#accommodation").offset().top
+    }, 800);
+  }
+});
 
 {#$(function(){#}
 {#//const navLinks = document.querySelectorAll('.nav-item')#}
