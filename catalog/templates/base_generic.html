@@ -191,13 +191,26 @@
   <script src="{% static 'javascript/lightbox.js' %}"></script>
 
   <script type="text/javascript">
-    $(function(){
-        const navMain = $(".navbar-collapse");
-        navMain.on("click", "a:not([data-toggle])", null, function () {
-            navMain.collapse('hide');
-            console.log("tak2?");
-     });
-  });
+  {#  $(function(){#}
+  {#      const navMain = $(".navbar-collapse");#}
+  {#      navMain.on("click", "a:not([data-toggle])", null, function () {#}
+  {#          navMain.collapse('hide');#}
+  {#          console.log("tak2?");#}
+  {#   });#}
+  {# });#}
+
+$(function(){
+//const navLinks = document.querySelectorAll('.nav-item')
+    const navLinks = document.querySelectorAll('.dropdown-item')
+const menuToggle = document.getElementById('navbarNavAltMarkup')
+const bsCollapse = new bootstrap.Collapse(menuToggle)
+navLinks.forEach((l) => {
+    l.addEventListener('click', () => { bsCollapse.toggle() })
+    {#l.addEventListener('click', () => { console.log("click"); document.getElementById("navbarNavAltMarkup").collapse(); })#}
+ });
+ });
+
+
   </script>
 </body>
 </html>
