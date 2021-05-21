@@ -73,9 +73,9 @@
                 Expeditions
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuExpeditions">
-                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#5-day safari">5-day</a></li>
-                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#2-day safari">2-day</a></li>
-                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#7-day safari">7-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#5-day">5-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#2-day">2-day</a></li>
+                <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#7-day">7-day</a></li>
                 <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#Mount Kilimanjaro">Mount Kilimanjaro</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{% url 'expeditions'  query='recommended' %}#create-own">Create own</a></li>
@@ -205,6 +205,7 @@
         if ($(window).width() < 991) {
             const hash = $(this).prop("hash");
             const aTag = $(hash);
+            console.log(aTag);
             if (aTag && aTag.offset() && aTag.offset().top) {
                 $('.navbar-toggler').click();
                 $('html,body').animate({scrollTop: aTag.offset().top - $("#navbarNavAltMarkup").height()}, 'slow');
