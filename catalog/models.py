@@ -118,6 +118,8 @@ class Itinerary(models.Model):
 class Expedition(models.Model):
     name = models.CharField(max_length=150, blank=True,
                             help_text='Enter a name for this recommended expedition. (e.g. 5-day safari)')
+    tag = models.CharField(max_length=50, blank=True,
+                           help_text='Enter a tag for this recommended expedition. (e.g. 5day)')
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True, help_text='Dont select a '
                                                                                                        'customer for '
                                                                                                        'recommended '
