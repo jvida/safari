@@ -32,8 +32,6 @@
               <h2><i>Wilderness MANIAC SAFARIS</i></h2>
             </div>
             <div class="col-lg-5 col-md-6 col-sm-6 my-auto" style="text-align: end">
-{#              <h3><a href="tel:+421-944-412-335">+421-944-412-335</a></h3>#}
-{#              <h3><a href="mailto:ahojky@gmail.com">ahojky@gmail.com</a></h3>#}
               <img class="header-icons" src="{% static 'img/icons/envelope.svg'%}" alt="Email:" width="21" height="21"><a class="fs-4 profile-links" href="mailto:ahojky@gmail.com">ahojky@gmail.com</a><br>
               <img class="header-icons" src="{% static 'img/icons/telephone.svg'%}" alt="Telephone:" width="21" height="21"><a class="fs-4 profile-links" href="tel:+421-944-412-335">+421-944-412-335</a>
             </div>
@@ -191,45 +189,28 @@
   <script src="{% static 'javascript/lightbox.js' %}"></script>
 
   <script type="text/javascript">
-  {#  $(function(){#}
-  {#      const navMain = $(".navbar-collapse");#}
-  {#      navMain.on("click", "a:not([data-toggle])", null, function () {#}
-  {#          navMain.collapse('hide');#}
-  {#          console.log("tak2?");#}
-  {#   });#}
-  {# });#}
- {# $('.dropdown-item').on('click', function(){#}
- {#     console.log("click");#}
- {##}
- {#   $('.navbar-toggler').click(); //bootstrap 4.x#}
- {# });#}
-  if ($(window).width() > 991) {
-      console.log("in");
-      }
-  $(".dropdown-item").click(function() {
-      console.log("click");
-  if ($(window).width() < 991) {
-      console.log("in")
-      const href = $(this).attr('href');
-      console.log(href);
-      $('body, html').animate({ // an animation if you prefer, slim jQuery doesn't include animate
-      scrollTop: $("#accommodation").offset().top-180
-    }, 800);
-  }
-});
+    $(".nav-link").click(function() {
+        if ($(window).width() < 991) {
+            const hash = $(this).prop("hash");
+            const aTag = $(hash);
+            if (aTag && aTag.offset() && aTag.offset().top) {
+                console.log("nav-link SCROLL", aTag);
+                $('.navbar-toggler').click();
+                $('html,body').animate({scrollTop: aTag.offset().top - $("#navbarNavAltMarkup").height()}, 'slow');
+            }
+        }
+    })
 
-{#$(function(){#}
-{#//const navLinks = document.querySelectorAll('.nav-item')#}
-{#    const navLinks = document.querySelectorAll('.dropdown-item')#}
-{#const menuToggle = document.getElementById('navbarNavAltMarkup')#}
-{#const bsCollapse = new bootstrap.Collapse(menuToggle)#}
-{#navLinks.forEach((l) => {#}
-{#    l.addEventListener('click', () => { bsCollapse.toggle() })#}
-    {#l.addEventListener('click', () => { console.log("click"); document.getElementById("navbarNavAltMarkup").collapse(); })#}
-{# });#}
-{# });#}
-
-
+    $(".dropdown-item").click(function() {
+        if ($(window).width() < 991) {
+            const hash = $(this).prop("hash");
+            const aTag = $(hash);
+            if (aTag && aTag.offset() && aTag.offset().top) {
+                $('.navbar-toggler').click();
+                $('html,body').animate({scrollTop: aTag.offset().top - $("#navbarNavAltMarkup").height()}, 'slow');
+            }
+        }
+    });
   </script>
 </body>
 </html>
