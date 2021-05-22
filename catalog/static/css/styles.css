@@ -35,6 +35,11 @@
     background-color: black;
 }
 
+.home-text {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
 /* so adding/removing trips adds/removes also <hr> after each trip */
 .crispy-form {
     margin-bottom: 50px;
@@ -223,6 +228,19 @@ a[href^="mailto:"], a[href^="tel:"] {
 
 .list-group-item {
     background: #fcfbfb;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.accordion-button {
+    text-align: start;
+    font-weight: 500;
+    background-color: #fcfbfb;
+}
+
+.expedition-description {
+    padding-left: 18px;
+    padding-right: 18px;
 }
 
 #my-parks {

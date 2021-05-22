@@ -23,7 +23,7 @@
           <div class="row align-items-center py-4">
             <div class="col-lg-7 px-2 px-md-4 pb-md-4">
               <h2 class="display-4">{{ expedition.name }}...</h2>
-              <p>{{ expedition.description|bleach|linebreaks }}</p>
+              <div class="expedition-description">{{ expedition.description|bleach|linebreaks }}</div>
             </div>
             <div class="col-lg-5 px-2 pt-4 px-md-4">
               <ol class="list-group list-group-numbered">
