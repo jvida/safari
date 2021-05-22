@@ -9,6 +9,19 @@
     margin-bottom: 5px;
 }
 
+#header-links {
+    font-size: 1.25em;
+}
+
+@media (max-width: 991px) {
+    #header-text {
+        font-size: 1.3em;
+    }
+    #header-links {
+        font-size: 1em;
+    }
+}
+
 /* so navbar has max width*/
 .container-fluid {
     max-width: 1400px;
