@@ -189,7 +189,7 @@ a[href^="mailto:"], a[href^="tel:"] {
 /* Profile END*/
 
 /* So jumping to a specific part of a page considers a sticky navbar */
-.jump-href:before {
+.jump-href {
   display: block;
   height: 66px;   /* equal to the header height */
   margin-top: -66px;  /* negative margin equal to the header height */
