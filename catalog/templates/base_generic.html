@@ -196,7 +196,7 @@
             if (aTag && aTag.offset() && aTag.offset().top) {
                 console.log("nav-link SCROLL", aTag);
                 $('.navbar-toggler').click();
-                $('html,body').animate({scrollTop: aTag.offset().top - $("#navbarNavAltMarkup").height()}, 'slow');
+                $('html,body').animate({scrollTop: aTag.offset().top - $("#navbarNavAltMarkup").height() - 66}, 'slow');
             }
         }
     })
@@ -208,7 +208,7 @@
             console.log(aTag);
             if (aTag && aTag.offset() && aTag.offset().top) {
                 $('.navbar-toggler').click();
-                $('html,body').animate({scrollTop: aTag.offset().top - $("#navbarNavAltMarkup").height()}, 'slow');
+                $('html,body').animate({scrollTop: aTag.offset().top - $("#navbarNavAltMarkup").height() - 66}, 'slow');
             }
         }
     });
