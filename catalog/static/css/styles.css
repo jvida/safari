@@ -36,8 +36,8 @@
 }
 
 .home-text {
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 /* so adding/removing trips adds/removes also <hr> after each trip */
@@ -106,7 +106,6 @@
 
 /* rounded corners */
 .container-offer-image-start #park-img {
-    /*border-top-left-radius: 45px;*/
     border-top-right-radius: 45px;
     border-bottom-left-radius: 45px;
     border-bottom-right-radius: 45px;
@@ -114,7 +113,6 @@
 
 .container-offer-image-end #park-img {
     border-top-left-radius: 45px;
-    /*border-top-right-radius: 45px;*/
     border-bottom-left-radius: 45px;
     border-bottom-right-radius: 45px;
 }
@@ -143,9 +141,7 @@
 }
 
 a[href^="mailto:"], a[href^="tel:"] {
-  /*font-family: sans-serif;*/
   color: black;
-  /*font-size: 11px;*/
 }
 
 

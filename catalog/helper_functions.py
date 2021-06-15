@@ -2,8 +2,12 @@ from PIL import Image
 from PIL import ImageOps
 from io import BytesIO
 from django.core.files.base import ContentFile
-from catalog.models import Park
+from catalog.models import Park, Customer, Trip
 from catalog.forms import TripForm, SingleTripForm
+import json
+from django.core.serializers import serialize
+from django.core.mail import send_mail
+from safari.settings import EMAIL_HOST_USER, EMAIL_SUBJECT_PREFIX, EMAIL_ADDRESS_FOR_NEW_ORDERS
 
 
 def expedition_helper(exp_type):
@@ -16,6 +20,33 @@ def expedition_helper(exp_type):
         trip_form = SingleTripForm
         single_trip = True
     return num_parks, trip_form, single_trip
+
+
+def create_email_msg(expedition, order_type):
+    msg = ""
+    customer = Customer.objects.get(id=expedition['customer'])
+    msg += f'Order type: {order_type} \n\n' \
+           f'Customer: {customer.user.username} \n' \
+           f'Name: {customer.user.first_name}, {customer.user.last_name}\n\n' \
+           f'Date: {expedition["date_from"]} - {expedition["date_to"]}\n' \
+           f'Number of people: {expedition["number_of_people"]}\n\n'
+
+    for trip_id in expedition["trips"]:
+        trip = Trip.objects.get(id=trip_id)
+        msg += f'{trip.park}\n' \
+               f'Accommodation: {trip.accommodation}\n' \
+               f'Days: {trip.days}\n\n'
+    if expedition["message_for_us"]:
+        msg += f'Message for us:\n{expedition["message_for_us"]}\n'
+
+    return msg
+
+
+def send_order(expedition, order_type):
+    serialized_obj = json.loads(serialize('json', [expedition]))[0]
+    email_content = create_email_msg(serialized_obj['fields'], order_type)
+    send_mail(EMAIL_SUBJECT_PREFIX + " " + order_type, email_content, EMAIL_HOST_USER,
+              [EMAIL_ADDRESS_FOR_NEW_ORDERS])
 
 
 def resize_image(image: Image, length: int, content_file: bool):

@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="d-grid col-9 col-sm-5 mx-auto pt-1 pb-5">
-      <button class="btn btn-primary" form="expedition-form" type="submit">Submit</button>
+      <button class="btn btn-primary" id="submit-btn" form="expedition-form" type="submit">Submit</button>
     </div>
   </div>
 
@@ -45,5 +45,12 @@
     $(function() {
         $('.crispy-form').formset({addText: 'Add another trip', deleteText: 'Remove this trip'});
     })
+
+    $(document).ready(function () {
+    $("#expedition-form").submit(function () {
+        $("#submit-btn").attr("disabled", true);
+        return true;
+    });
+});
   </script>
 {% endblock %}

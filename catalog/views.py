@@ -1,10 +1,16 @@
 import os
+
+from django.core.serializers import serialize
 from django.db.models import Sum
 from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
+from safari.settings import EMAIL_HOST_USER, EMAIL_SUBJECT_PREFIX, EMAIL_ADDRESS_FOR_NEW_ORDERS
+from django.contrib import messages
+from django.forms.models import model_to_dict
 
-from .helper_functions import resize_image, expedition_helper
+from .helper_functions import resize_image, expedition_helper, create_email_msg, send_order
 from PIL import Image
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
@@ -12,7 +18,7 @@ from catalog.models import Park, Accommodation, Expedition, Trip, Customer, Feed
 from django.views import generic
 
 # for user creation form
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from catalog.forms import CreateNewUserForm, EditUserProfile, EditCustomerProfile, ExpeditionForm, BaseTripFormSet,\
     TripForm, FeedbackForm, SingleTripForm
@@ -21,6 +27,7 @@ from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from django.urls import reverse_lazy
 from django.forms import modelformset_factory
+import json
 
 
 # Create your views here.
@@ -59,7 +66,7 @@ class ExpeditionListView(generic.ListView):
             return Expedition.objects.filter(recommended=True)
         elif self.kwargs['query'] == "my_expeditions":
             customer = Customer.objects.get(user=self.request.user)
-            return Expedition.objects.filter(customer=customer)
+            return Expedition.objects.filter(customer=customer).order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super(ExpeditionListView, self).get_context_data(**kwargs)
@@ -214,7 +221,7 @@ class FeedbackDelete(LoginRequiredMixin, generic.DeleteView):
 
 @login_required
 def create_new_expedition(request, exp_type):
-    print("add_recommended_expedition", exp_type)
+    print("create_new_expedition", exp_type)
     num_parks, trip_form, single_trip = expedition_helper(exp_type)
     TripFormSet = modelformset_factory(Trip, form=trip_form, formset=BaseTripFormSet,
                                        max_num=num_parks, min_num=1, extra=0, validate_min=True)
@@ -241,7 +248,10 @@ def create_new_expedition(request, exp_type):
 
             expedition.customer = Customer.objects.get(user=request.user)
             expedition.single_trip = single_trip
+            expedition.sent = True
             expedition.save()
+
+            send_order(expedition, "New Order")
             # redirect to a new URL:
             return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
         # # If this is a GET (or any other method) create the default form.
@@ -290,7 +300,10 @@ def add_recommended_expedition(request, pk, exp_type):
 
             expedition.customer = Customer.objects.get(user=request.user)
             expedition.single_trip = single_trip
+            expedition.sent = True
             expedition.save()
+
+            send_order(expedition, "New Order")
             # redirect to a new URL:
             return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
         # # If this is a GET (or any other method) create the default form.
@@ -329,6 +342,7 @@ def edit_my_expedition(request, pk, exp_type):
             expedition_instance.message_for_us = expedition_form.cleaned_data['message_for_us']
             expedition_instance.date_from = expedition_form.cleaned_data['date_from']
             expedition_instance.date_to = expedition_form.cleaned_data['date_to']
+            expedition_instance.sent = True
             expedition_instance.trips.clear()
 
             trips = trip_formset.save(
@@ -339,9 +353,10 @@ def edit_my_expedition(request, pk, exp_type):
                 trip, created = Trip.objects.get_or_create(park=trip.park,
                                                            accommodation=trip.accommodation,
                                                            days=trip.days)
-                print(trip)
                 expedition_instance.trips.add(trip)
             expedition_instance.save()
+
+            send_order(expedition_instance, "Order !CHANGED!")
             # redirect to a new URL:
             return HttpResponseRedirect(reverse('expeditions', args=("my_expeditions",)))
         # # If this is a GET (or any other method) create the default form.
@@ -360,16 +375,21 @@ class ExpeditionDelete(LoginRequiredMixin, generic.DeleteView):
     model = Expedition
     success_url = reverse_lazy('expeditions', kwargs={'query': "my_expeditions"})
 
+    def delete(self, request, *args, **kwargs):
+        send_order(Expedition.objects.get(id=self.kwargs['pk']), "Order !!!DELETED!!!")
+        response = super(ExpeditionDelete, self).delete(request, *args, **kwargs)
+        return response
+
 
 def about_us(request):
-    """View function for about us page of site."""
+    """View function for about us."""
 
     # Render the HTML template catalog/about_us.html with the data in the context variable
     return render(request, 'catalog/about_us.html')
 
 
 def gallery(request):
-    """View function for home page of site."""
+    """View function for gallery."""
 
     context = {}
     # files = os.listdir(os.path.join(settings.STATIC_ROOT, "img/gallery/"))

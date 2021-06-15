@@ -126,13 +126,21 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'catalog/static')
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/#home'
 
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-# for testing purposes
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_SUBJECT_PREFIX = config('DJANGO_EMAIL_SUBJECT_PREFIX')
+EMAIL_HOST = config('DJANGO_EMAIL_HOST')
+EMAIL_HOST_USER = config('DJANGO_EMAIL_HOST_USER')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = config('DJANGO_EMAIL_HOST_PASSWORD')
+
+EMAIL_ADDRESS_FOR_NEW_ORDERS = config('DJANGO_EMAIL_ADDRESS_FOR_NEW_ORDERS')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

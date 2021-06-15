@@ -14,11 +14,20 @@
       </div>
     </div>
 
-    <form action="" method="POST">
+    <form id="delete-expedition-form" action="" method="POST">
       {% csrf_token %}
       <div class="d-grid col-9 col-sm-5 mx-auto pt-1 pb-5">
-        <button class="btn btn-danger" type="submit">Yes, delete.</button>
+        <button class="btn btn-danger" id="submit-btn" type="submit">Yes, delete.</button>
       </div>
     </form>
   </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+    $("#delete-expedition-form").submit(function () {
+        $("#submit-btn").attr("disabled", true);
+        return true;
+    });
+});
+  </script>
 {% endblock %}

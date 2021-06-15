@@ -108,8 +108,6 @@ class Itinerary(models.Model):
                             help_text='Enter some name for easier organization. (e.g. 5-day safari itinerary)')
     dailyPlans = models.ManyToManyField('DailyPlan', help_text='Select daily plans.', blank=True)
 
-    # description = models.TextField(max_length=2000, help_text='Enter a short description for this expedition programme.')
-
     def __str__(self):
         """String for representing the Model object."""
         return self.name
@@ -130,6 +128,7 @@ class Expedition(models.Model):
     message_for_us = models.TextField(max_length=2000, blank=True, help_text='Enter a message for us, if u want.')
     recommended = models.BooleanField(default=False, help_text='Is this a recommended trip by agency?')
     single_trip = models.BooleanField(null=True)
+    sent = models.BooleanField(default=False)
     description = models.TextField(max_length=2000, blank=True,
                                    help_text='Enter a short description for this expedition.')
     itinerary = models.ForeignKey('Itinerary', on_delete=models.CASCADE, blank=True, null=True)
@@ -139,7 +138,8 @@ class Expedition(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id}, {self.name}, {self.customer}, {self.number_of_people}, recommended: {self.recommended}'
+        return f'{self.id}, {self.name}, {self.customer}, {self.number_of_people}, recommended: {self.recommended}, ' \
+               f'sent: {self.sent} '
 
     # used when adding and modifying one of recommended expeditions
     def get_absolute_url_rec(self):

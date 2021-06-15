@@ -90,17 +90,17 @@
               <ol class="list-group list-group-numbered">
                 <li class="list-group-item" id="my-rest">
                   <span id="my-expeditions-buttons">
-                {% if not expedition.single_trip %}
-                  <a href="{{ expedition.get_absolute_url_my }}#header-anchor">
-                {% else %}
-                  <a href="{{ expedition.get_absolute_url_my_single }}#header-anchor">
-                {% endif %}
-                    <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
-                  </a>
-                <a href="{% url 'expedition-delete'  pk=expedition.id %}#header-anchor">
-                  <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Delete" width="20" height="20">
-                </a>
-              </span>
+                    {% if not expedition.single_trip %}
+                      <a href="{{ expedition.get_absolute_url_my }}#header-anchor">
+                    {% else %}
+                      <a href="{{ expedition.get_absolute_url_my_single }}#header-anchor">
+                    {% endif %}
+                        <img src="{% static 'img/icons/pencil-square.svg'%}" alt="Update" width="20" height="20">
+                      </a>
+                    <a href="{% url 'expedition-delete'  pk=expedition.id %}#header-anchor">
+                      <img src="{% static 'img/icons/trash-fill.svg'%}" alt="Delete" width="20" height="20">
+                    </a>
+                  </span>
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">{{ expedition.date_from }} - {{ expedition.date_to }}</div>
                   </div>
